@@ -1,6 +1,49 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+@import 'variables';
+@import 'mixins';
+
+
+.login-section {
+  border: 1px solid green;
+  background-color: #fff;
+}
+h1 {
+  font-family: $headerFont;
+}
+h3 {
+  font-family: $font;
+}
 
 body {
-  background-color: $primary-background;
+  background-image: url('../images/grandbudapest.jpg');
+}
+
+
+.hide {
+  display: none;
+}
+
+.manager-dash {
+  background: #fff;
+  width: 80%;
+  margin: 5% auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr)
+}
+
+.avail-rooms-secion {
+  @include manager-dash();
+  border: 1px solid blue;
+  grid-column: 1 / 2;
+}
+
+.revenue-section {
+  @include manager-dash();
+  border: 1px solid green;
+  grid-column: 2 / 3;
+}
+
+.percent-occupied-section {
+  @include manager-dash();
+  border: 1px solid orange;
+  grid-column: 3 / 4;
 }

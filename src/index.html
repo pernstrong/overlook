@@ -2,18 +2,46 @@
 <html lang="en-US">
   <head>
     <title>The Overlook Hotel</title>
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet"> -->
   </head>
   <body>
     <h1></h1>
     
-    <section class="login-section">
-      <h3>Welcome! Please Sign In.</h3>
+    <section class="login-section hide">
+      <h1>The Overlook</h1>
+      <h3>Welcome, please sign in</h3>
       <label for="username">Username:</label>
       <input class="username-login" name="username"type="text">
       <label for="password">Password:</label>
       <input class="password-login" type="password">
       <button class="login-btn">Login</button>
       <section class='incorrect-login'></section>
+  </section>
+
+  <section class="manager-screen">
+    <h3>Manager Dashboard</h3>
+    <input type="date" class="manager-date-input">
+    <button class="manager-select-date">Select Date</button>
+  <section class="manager-dash">
+    <section class="avail-rooms-secion">
+      <h4 class="rooms-avail-header">Please Select a Date</h4>
+      <p class="avail-rooms-display"></p>
+    </section>
+    <section class="revenue-section">
+     <h4 class="revenue-header">Please Select a Date</h4>
+      <p class="revenue-display"></p>
+    </section>
+    <section class="percent-occupied-section">
+      <h4 class="occupancy-header">Please Select a Date</h4>
+      <p class="occupancy-display"></p>
+    </section>
+  </section>
+  </section>
+
+  <section class="user-dash hide">
+    <h1>The Overlook</h1>
+    <h3 class="welcome"></h3>
+    <input type="date">
   </section>
 
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->

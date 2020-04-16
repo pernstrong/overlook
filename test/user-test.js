@@ -54,16 +54,21 @@ describe('User', function() {
     expect(user1.upcomingBookings.length).to.equal(2)
     expect(user1.upcomingBookings[0].id).to.equal('ten')
   });
- 
-  // it.skip('should calculate how much the user has spent on rooms', function() {
+  
+  it.skip('should be able to book a room', function() {
 
-  //   expect(user1.).to.equal()
-  // });
+    expect(user1.).to.equal()
+  });
 
-  // it.skip('should calculate how much the user has spent on rooms', function() {
+  it.skip('should calculate how much the user has spent on rooms', function() {
 
-  //   expect(user1.pastBookings).to.deep.equal()
-  // });
+    expect(user1.).to.equal()
+  });
+
+  it.skip('should calculate how much the user has spent on rooms', function() {
+
+    expect(user1.pastBookings).to.deep.equal()
+  });
 
 
 

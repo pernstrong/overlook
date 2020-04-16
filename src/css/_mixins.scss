@@ -4,3 +4,9 @@
     width: 80%;
     margin: 5% 5%;
 }
+
+@mixin user-dash() {
+    width: 80%;
+    margin: 5% auto;
+    text-align: center;
+}

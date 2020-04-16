@@ -30,7 +30,7 @@ body {
   grid-template-columns: repeat(3, 1fr)
 }
 
-.avail-rooms-secion {
+.avail-rooms-section {
   @include manager-dash();
   border: 1px solid blue;
   grid-column: 1 / 2;
@@ -46,4 +46,28 @@ body {
   @include manager-dash();
   border: 1px solid orange;
   grid-column: 3 / 4;
+}
+
+.user-dash {
+  @extend .manager-dash;
+  grid-template-columns: 1fr 1fr;
+
+}
+
+.user-bookings {
+  @include user-dash()
+  border: 1px solid green;
+}
+
+.user-total-spent {
+  @include user-dash()
+  border: 1px solid orange;
+}
+
+.user-book-section {
+  @extend .manager-dash;
+}
+
+.user-avail-rooms-display {
+  list-style-type: none;
 }

@@ -74,5 +74,22 @@ it('should be able to find its total reven for a given date', function() {
   expect(hotel2.findRevenue('2020/07/15')).to.equal(900);
 });
 
+it('should be able to filter its avail rooms by room type', function() {
+ 
+ 
+  expect(hotel1.filterAvailRoomsByType('2020/06/15', 'suite')).to.deep.equal([{number: 12, roomType: 'suite', bidet: false, bedSize: 'queen', numBeds: 1, costPerNight: 500}]);
+  expect(hotel1.filterAvailRoomsByType('2020/06/15', 'penthouse')).to.deep.equal([{number: 22, roomType: 'penthouse', bidet: true, bedSize: 'king', numBeds: 2, costPerNight: 5000}]);
+})
+
+it('should be able to add a booking', function() {
+  expect(hotel1.allBookings.length).to.equal(2)
+
+  hotel1.addBooking({id: 1, name: 'Billy Beans'}, 12, "2020/06/07")
+  
+  expect(hotel1.allBookings.length).to.equal(3)
+  expect(hotel1.allBookings[2].date).to.equal("2020/06/07")
+  expect(hotel1.allBookings[2].userID).to.equal(1)
+})
+
 
   });

@@ -18,12 +18,12 @@
       <section class='incorrect-login'></section>
   </section>
 
-  <section class="manager-screen">
+  <section class="manager-screen hide">
     <h3>Manager Dashboard</h3>
     <input type="date" class="manager-date-input">
     <button class="manager-select-date">Select Date</button>
   <section class="manager-dash">
-    <section class="avail-rooms-secion">
+    <section class="avail-rooms-section">
       <h4 class="rooms-avail-header">Please Select a Date</h4>
       <p class="avail-rooms-display"></p>
     </section>
@@ -38,11 +38,31 @@
   </section>
   </section>
 
-  <section class="user-dash hide">
-    <h1>The Overlook</h1>
-    <h3 class="welcome"></h3>
-    <input type="date">
+  <section class="user-screen">
+    <h3 class="user-welcome-message"></h3>
+    <section class="user-dash">
+    <section class="user-bookings">
+      <h4 class="user-bookings-header">Your Bookings</h4>
+      <ul class="user-bookings-display"></ul>
+      <!-- <li class="list"></li> -->
+    </section>
+    <section class="user-total-spent">
+      <h4 class="user-total-spent-header">You have spent</h4>
+      <p class="user-total-spent-display"></p>
+    </section>
+    </section>
+    <section class="user-book-section">
+      <h3 class="user-book-header">Book a Room</h3>
+      <section class="user-book-form">
+        <label>Please Select a Date</label> 
+        <input type="date" class="user-book-input">
+        <button class="user-book-button">See Available Rooms</button>
+        <section class="user-avail-rooms-display"></section>
+
+      </section>
+    </section>
   </section>
+
 
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>

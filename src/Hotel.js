@@ -5,15 +5,40 @@ class Hotel {
     this.allBookings = allBookings;
   }
 
-  findOccupancyPercent() {
-    // find total rooms booked/avail?
+  findOccupancy(date) {
+    const bookingsOnDate = this.allBookings.filter(booking => booking.date === date)
+    return bookingsOnDate.length / this.allRooms.length
+
   }
 
-  findAvailableRooms() {
-    // finds rooms avail
+  findAvailableRooms(date) {
+    const bookedRooms = this.allBookings.reduce((unavailRooms, booking) => {
+      this.allRooms.forEach(room => {
+        if (booking.date === date && room.number === booking.roomNumber) {
+          unavailRooms.push(room)
+        }
+      })
+      return unavailRooms
+    }, []) 
+    return this.allRooms.reduce((availRooms, room) => {
+      if (!bookedRooms.includes(room)) {
+        availRooms.push(room)
+      }
+      return availRooms
+    }, [])
   }
 
-  findTodaysRevenue() {
-    // find total $ for date
+  findRevenue(date) {
+    return this.allBookings.reduce((revenue, booking) => {
+      this.allRooms.forEach(room => {
+        if (room.number === booking.roomNumber && booking.date === date) {
+          revenue += room.costPerNight;
+        }
+      })
+      return revenue
+    }, 0)
   }
 }
+
+
+export default Hotel;

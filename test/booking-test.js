@@ -1,55 +1,50 @@
 import Booking from '../src/Booking';
-const chai = require('chai')
-  , spies = require('chai-spies');
+const spies = require('chai-spies');
 chai.use(spies)
 import chai from 'chai';
 const expect = chai.expect;
 
 
 
-describe('See if the tests are running', function() {
+describe('Booking', function() {
   
     let booking1;
 
   this.beforeEach(function () {
    
-    booking1 = new Booking("abc123", 1, "2020/4/15", 2, [])
-
+    booking1 = new Booking({id: "abc123", userID: 1, date: "2020/4/15", roomNumber: 2, roomServiceCharges: []})
   })
   
-    it.skip('should have be a function', function() {
-
-    expect(booking1).to.be.a('function');
+    it('should have be a function', function() {
+    expect(Booking).to.be.a('function');
   });
 
-  it.skip('should be an instance of Booking', function() {
-        
+  it('should be an instance of Booking', function() {  
     expect(booking1).to.be.an.instanceof(Booking);
   });
 
-  it.skip('should have an id', function() {
-        
+  it('should have an id', function() { 
     expect(booking1.id).to.equal("abc123");
   });
  
-  it.skip('should have a user id', function() {
+  it('should have a user id', function() {
         
     expect(booking1.userID).to.equal(1);
   });
 
-  it.skip('should have a date', function() {
+  it('should have a date', function() {
         
-    expect(booking1.id).to.equal("2020/4/15");
+    expect(booking1.date).to.equal("2020/4/15");
   });
 
-  it.skip('should have an room number', function() {
+  it('should have an room number', function() {
         
     expect(booking1.roomNumber).to.equal(2);
   });
 
-  it.skip('should have not have a room service charge by default', function() {
+  it('should have not have a room service charge by default', function() {
         
-    expect(booking1.id).to.deep.equal([]);
+    expect(booking1.roomServiceCharges).to.deep.equal([]);
   });
 
 })

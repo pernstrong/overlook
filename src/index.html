@@ -4,66 +4,202 @@
     <title>The Overlook Hotel</title>
     <!-- <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet"> -->
   </head>
-  <body>
-    <h1></h1>
-    
-    <section class="login-section hide">
-      <h1>The Overlook</h1>
-      <h3>Welcome, please sign in</h3>
+  <header>
+    <h1>The Overlook Hotel</h1>
+  </header>
+<nav>
+
+</nav>
+<main>
+
+<section class="login-screen hide">
+<section class="login-section">
+  <h3 class="sign-in-message"> Please sign in below</h3>
+  <label for="username">Username:</label>
+  <input class="username-login" name="username"type="text">
+  <label for="password">Password:</label>
+  <input class="password-login" type="password">
+  <button class="login-btn">Login</button>
+  <section class='incorrect-login'></section>
+</section>
+<section class="hotel-image-section">
+  <img src="./images/hotel2.jpg">
+</section>
+</section>
+
+
+<section class="manager-screen hide ">
+<section class="manager-dashboard">
+<h2>Manager Dashboard</h2>
+<h2 class="stats-for-day">Stats for Today</h2>
+<section class="manager-select-date-section">
+  <h4>Select a different date:</h4>
+  <input type="date" class="manager-date-input">
+  <button class="manager-select-date">Select Date</button>
+  </section>
+<section class="avail-rooms-section">
+  <h4 class="rooms-avail-header">Rooms Available:</h4>
+  <p class="avail-rooms-display"></p>
+</section>
+<section class="revenue-section">
+ <h4 class="revenue-header">Revenue:</h4>
+  <p class="revenue-display"></p>
+</section>
+<section class="percent-occupied-section">
+  <h4 class="occupancy-header">Occupancy:</h4>
+  <p class="occupancy-display"></p>
+</section>
+</section>
+<section class="manager-search-section">
+  <h3>Search Guests</h3>
+  <input type="text" class="user-search">
+  <button class="search-button">Find User</button>
+  <ul class="user-search-results"></ul> 
+</section>
+</section>
+
+
+<section class="user-screen  ">
+  <section class="user-dashboard  ">
+    <h3 class="user-welcome-message "></h3>
+ <section class="user-bookings ">
+    <h4 class="user-bookings-header">Your Bookings</h4>
+    <ul class="user-bookings-display"></ul> 
+    <li class="list"></li>
+  </section>
+
+  <section class="user-total-spent ">
+    <h4 class="user-total-spent-header">You have spent</h4>
+    <p class="user-total-spent-display"></p>
+  </section>
+</section>
+  
+  <section class="user-book-section ">
+    <h3 class="user-book-header ">Book a Room</h3>
+    <section class="user-book-form ">
+      <label>Please Select a Date</label> 
+      <input type="date" class="user-book-input">
+      <button class="user-book-button">See Available Rooms</button>
+      <section class="user-avail-rooms-display"></<section>
+      </section>
+    </section>
+  </section>
+</section>
+
+</main>
+
+    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+  </body>
+</html>
+
+
+
+
+
+<!-- <body> -->
+  <!-- <nav> -->
+    <!-- <img src="./images/grandbudapest.png" class="grand-budapest-pic"> -->
+    <!-- <h1>The Overlook Hotel</h1> -->
+    <!-- <section class="login-section ">
+      <h3> Please sign in below:</h3>
       <label for="username">Username:</label>
       <input class="username-login" name="username"type="text">
       <label for="password">Password:</label>
       <input class="password-login" type="password">
       <button class="login-btn">Login</button>
       <section class='incorrect-login'></section>
-  </section>
+    </section> -->
+      <!-- <section class="user-nav-section hide">
+        <h3 class="user-welcome-message"></h3>
+        <button>Show Dashboard</button> -->
+        <!-- <button>My Upcoming Bookings</button>
+        <button></button> -->
+        <!-- <section class="nav-bar">
+          <section>
+          </section>
+        <section class="login-section hide">
+          <h3>Welcome, please sign in:</h3>
+          <label for="username">Username:</label>
+          <input class="username-login" name="username"type="text">
+          <label for="password">Password:</label>
+          <input class="password-login" type="password">
+          <button class="login-btn">Login</button>
+          <section class='incorrect-login'></section>
+      </section>
+      </section>
 
-  <section class="manager-screen hide">
-    <h3>Manager Dashboard</h3>
-    <input type="date" class="manager-date-input">
-    <button class="manager-select-date">Select Date</button>
+  </nav>
+  <main> -->
+
+  <!-- <section class="login-section">
+    <h3>Welcome, please sign in:</h3>
+    <label for="username">Username:</label>
+    <input class="username-login" name="username"type="text">
+    <label for="password">Password:</label>
+    <input class="password-login" type="password">
+    <button class="login-btn">Login</button>
+    <section class='incorrect-login'></section>
+</section> -->
+
+<!-- <section class="manager-screen hide">
+  
+  
+  <section class="manager-nav">hello</section>
+  <h3>Manager Dashboard</h3>
   <section class="manager-dash">
-    <section class="avail-rooms-section">
-      <h4 class="rooms-avail-header">Please Select a Date</h4>
-      <p class="avail-rooms-display"></p>
-    </section>
-    <section class="revenue-section">
-     <h4 class="revenue-header">Please Select a Date</h4>
-      <p class="revenue-display"></p>
-    </section>
-    <section class="percent-occupied-section">
-      <h4 class="occupancy-header">Please Select a Date</h4>
-      <p class="occupancy-display"></p>
-    </section>
+  <section class="manager-select-date-section">
+  <input type="date" class="manager-date-input">
+  <button class="manager-select-date">Select Date</button>
   </section>
+  
+  
+  <section class="avail-rooms-section">
+    <h4 class="rooms-avail-header">Please Select a Date</h4>
+    <p class="avail-rooms-display"></p>
+  </section>
+  
+  <section class="revenue-section">
+   <h4 class="revenue-header"></h4>
+    <p class="revenue-display"></p>
+  </section>
+  
+  <section class="percent-occupied-section">
+    <h4 class="occupancy-header"></h4>
+    <p class="occupancy-display"></p>
   </section>
 
-  <section class="user-screen">
-    <h3 class="user-welcome-message"></h3>
-    <section class="user-dash">
-    <section class="user-bookings">
-      <h4 class="user-bookings-header">Your Bookings</h4>
-      <ul class="user-bookings-display"></ul>
-      <!-- <li class="list"></li> -->
-    </section>
-    <section class="user-total-spent">
-      <h4 class="user-total-spent-header">You have spent</h4>
-      <p class="user-total-spent-display"></p>
-    </section>
-    </section>
-    <section class="user-book-section">
-      <h3 class="user-book-header">Book a Room</h3>
-      <section class="user-book-form">
-        <label>Please Select a Date</label> 
-        <input type="date" class="user-book-input">
-        <button class="user-book-button">See Available Rooms</button>
-        <section class="user-avail-rooms-display"></section>
+  <section class="manager-search-section">
+  <input type="text" class="user-search">
+  <button class="search-button">Find User</button>
+  <ul class="user-search-results">
+  </ul> 
+</section>
+</section>
+</section> -->
 
+<!-- <section class="user-screen "> -->
+  <!-- <h3 class="user-welcome-message"></h3> -->
+  <!-- <section class="user-dash"> -->
+
+  <!-- <section class="user-bookings hide">
+    <h4 class="user-bookings-header">Your Bookings</h4>
+    <ul class="user-bookings-display"></ul> -->
+    <!-- <li class="list"></li> -->
+  <!-- </section> -->
+
+  <!-- <section class="user-total-spent hide">
+    <h4 class="user-total-spent-header">You have spent</h4>
+    <p class="user-total-spent-display"></p>
+  </section> -->
+  
+  <!-- <section class="user-book-section hide">
+    <h3 class="user-book-header hide">Book a Room</h3>
+    <section class="user-book-form hide">
+      <label>Please Select a Date</label> 
+      <input type="date" class="user-book-input">
+      <button class="user-book-button">See Available Rooms</button>
+      <section class="user-avail-rooms-display"></<section>
       </section>
     </section>
   </section>
-
-
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
-  </body>
-</html>
+</section> -->

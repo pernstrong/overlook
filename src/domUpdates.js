@@ -2,40 +2,72 @@ import $ from 'jQuery'
 
 const domUpdates = {
 
-  showWelcomeUserScreen(user, allRooms) {
-    $('.user-welcome-message').text(`Welcome ${user.giveFirstName()}`)
-    this.displayUserBookings(user)
-    this.displayUserTotalSpent(user, allRooms)
+  displayUserBookings(user) {
+    const formattedBookings = user.bookings.reduce((formatteds, booking) => {
+      const betterDate = this.formatDateForDisplay(booking.date)
+      formatteds.push(betterDate)
+      return formatteds
+    }, [])
+    formattedBookings.forEach(booking =>  $('.user-bookings-display').append(`${booking} `))
   },
 
-  displayUserBookings(user) {
-    const bookings = user.bookings.forEach(booking =>  $('.user-bookings-display').append(`${booking.date} `))
-    // $('.user-bookings-display').(bookings)
+  formatDateForDisplay(date) {
+    date = date.split('/')
+    const year = date.shift()
+    date.push(year)
+    return date.join('-')
   },
 
   displayUserTotalSpent(user, rooms) {
     $('.user-total-spent-display').text(`$${user.findTotalSpent(rooms)}`)
   },
 
-  showWelcomeManagerScreen() {
-    console.log('welcome manager')
-    // change to manager screen
+  showManagerScreen() {
+    ('welcome manager')
+    this.hideAllSections();
+    $('.manager-screen').removeClass('hide')
+
   },
 
-  showManagerDashInfo(hotel) {
+  showUserScreen(user, allRooms) {
+    $('.user-welcome-message').text(`Welcome ${user.giveFirstName()}`)
+    this.hideAllSections();
+    $('.user-dashboard').removeClass('hide')
+    $('.user-book-section').removeClass('hide')
+    $('.user-book-form').removeClass('hide')
+    this.displayUserBookings(user);
+    this.displayUserTotalSpent(user, allRooms)
+  },
+
+  hideAllSections() {
+    $('.login-section').addClass('hide')
+    $('.manager-screen').addClass('hide')
+    $('.user-screen').addClass('hide')
+    $('.hotel-image-section').addClass('hide')
+
+  },
+
+  showManagerDashInfo(hotel, today) {
     let date = $('.manager-date-input').val();
     date = this.formatDate(date)
-    this.updateDateDisplay(date);
+    // this.updateDateDisplay(date);
     this.displayRoomsAvail(hotel, date);
     this.displayRevenue(hotel, date);
     this.displayOccupancy(hotel, date)
+    // this.updateStatsMessageDate(date)
   },
 
-  updateDateDisplay(date) {
-    $('.rooms-avail-header').text(`Total Rooms Available on ${date}`)
-    $('.revenue-header').text(`Revenue for ${date}`)
-    $('.occupancy-header').text(`Occupancy for ${date}`)
+  updateStatsMessageDate() {
+    let date = $('.manager-date-input').val();
+    $('.stats-for-day').text(`Stats for ${this.formatDateForDisplay(date)}`)
   },
+
+
+  // updateDateDisplay(date) {
+  //   $('.rooms-avail-header').text(`Total Rooms Available`)
+  //   $('.revenue-header').text(`Revenue for ${this.formatDateForDisplay(date)}`)
+  //   $('.occupancy-header').text(`Occupancy for ${this.formatDateForDisplay(date)}`)
+  // },
 
   displayRoomsAvail(hotel, date) {
     $('.avail-rooms-display').text(hotel.findAvailableRooms(date).length)
@@ -57,18 +89,28 @@ const domUpdates = {
     this.clearAvailRoomsDisplay()
     date = this.formatDate(date)
     hotel.findAvailableRooms(date).forEach(room => {
-      $('.user-avail-rooms-display').append(`<input type="checkbox" value="${room.number}"><li>${room.number} -${room.roomType}</li>`)
+      $('user-avail-rooms-display').append(`<input type="checkbox" value="${room.number}"><li>${room.number} -${room.roomType}</li>`)
     })
     this.addAvailRoomFilter()
   },
 
+  showAvailableRoomsMngr(hotel, date) {
+    // this.clearAvailRoomsDisplay()
+    date = this.formatDate(date)
+    console.log(date)
+    hotel.findAvailableRooms(date).forEach(room => {
+      $('.manager-avail-rooms-display').append(`<input type="checkbox" value="${room.number}"><li>${room.number} -${room.roomType}</li>`)
+    })
+    $('.manager-avail-rooms-display').append(`<button class="book-room-for-guest">Book for Guest</butotn>`)
+  },
+
   clearAvailRoomsDisplay() {
-    $('.user-avail-rooms-display').text('')
+    $('user-avail-rooms-display').text('')
   },
 
   addAvailRoomFilter() {
-    $('.user-avail-rooms-display').prepend('<button class="book-room">Book Room</button>')
-    $('.user-avail-rooms-display').append(`
+    $('user-avail-rooms-display').prepend('<button class="book-room">Book Room</button>')
+    $('user-avail-rooms-display').append(`
     <label for="filter-rooms">Filter by Room Type</label>
     <select id="filter-rooms">
       <option value="">Please Choose a Room Type</option>
@@ -90,32 +132,70 @@ const domUpdates = {
       $('.user-avail-rooms-display').append(`
       <input type="checkbox" value="${room.number}"><li>${room.number} -${room.roomType}</li>`)
     })
+  },
+
+  displayThankYou() {
+    $('.user-avail-rooms-display').text('Thank you for booking!')
+  },
+
+  displayManagerGuestSearchResults(manager, input, allRooms) {
+    this.clearGuestSearchResultsSection()
+    const results = manager.searchGuests(input)
+    results.forEach(user => {
+      $('.user-search-results').append(`<li>${user.name}</li><button class="show-guest-details" value=${user.id}>Guest Details</button>`)
+    })
+    console.log(results)
+  },
+
+  clearGuestSearchResultsSection() {
+    $('.user-search-results').text('')
+  },
+
+  showGuestDetails(guest, allRooms, today) {
+    this.clearGuestSearchResultsSection()
+    $('.user-search-results').html(`
+    <h2>Guest: ${guest.name}</h2>
+    <button class="book-for-guest" value=${guest.id}>Book Room</button>
+    <h4>Upcoming Bookings:</h4>
+    <ul class="upcoming-bookings"></ul>
+    <h4>Past Bookings:</h4> 
+    <ul class="past-bookings"></ul>
+    <h4>Total Spent: $${guest.findTotalSpent(allRooms)}</h4>
+    `)
+    this.displayUpcomingBookings(guest, today)
+    this.displayPastBookings(guest, today)
+  },
+
+  displayPastBookings(guest, today) {
+    const pastBookings = guest.findPastBookings(today).sort((a, b) => a.date - b.date)
+    pastBookings.forEach(booking => {
+      $('.past-bookings').append(`<li>${booking.date}</li>`)
+    })
+  },
+
+  displayUpcomingBookings(guest, today) {
+    const futureBookings = guest.findFutureBookings(today).sort((a, b) => a.date - b.date)
+    futureBookings.forEach(booking => {
+      $('.upcoming-bookings').append(`
+      <li>${booking.date}</li>
+      <button class="delete-booking" value="${booking.id}>Delete Booking</button>
+      `)
+    })
+  },
+  
+  displayBookForGuestScreen(guest) {
+    $('.user-search-results').html(`
+      <section class="manager-book-form">
+      <label>Please Select a Date</label> 
+      <input type="date" class="manager-book-input">
+      <button class="manager-book-button">Available Rooms</button>
+      <section class="manager-avail-rooms-display"></<section>
+      </section>
+      `)
+
   }
 
-  // <input type="radio" value="${room.number}">
-  
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 export default domUpdates;

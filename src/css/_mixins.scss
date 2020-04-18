@@ -2,7 +2,8 @@
 
 @mixin manager-dash() {
     width: 80%;
-    margin: 5% 5%;
+    margin: 2% 5%;
+    font-size: 3vh;
 }
 
 @mixin user-dash() {
@@ -10,3 +11,16 @@
     margin: 5% auto;
     text-align: center;
 }
+
+@mixin box-shadow() {
+    -webkit-box-shadow: 10px 10px 66px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 66px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 66px 0px rgba(0,0,0,0.75);
+}
+
+// @mixin blurred-background() {
+//     background-image: url('../images/grandbudapest.png');
+//     filter: blur(5px);
+// -webkit-filter: blur(5px);
+// -moz-filter: blur(5px);
+// }

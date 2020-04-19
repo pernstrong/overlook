@@ -12,10 +12,15 @@
     text-align: center;
 }
 
+@mixin twoColGrid() {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 @mixin box-shadow() {
-    -webkit-box-shadow: 10px 10px 66px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 66px 0px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 66px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 53px -8px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 53px -8px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 53px -8px rgba(0,0,0,0.75);
 }
 
 // @mixin blurred-background() {

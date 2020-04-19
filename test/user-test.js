@@ -94,12 +94,4 @@ describe('User', function() {
     expect(user1.findTotalSpent(rooms)).to.equal(750)
   });
 
-  it.skip('should calculate how much the user has spent on rooms', function() {
-
-    expect(user1.pastBookings).to.deep.equal()
-  });
-
-
-
-
 });

@@ -4,9 +4,6 @@ class User {
     this.name = userData.name;
     this.bookings = []
     this.totalSpent = 0;
-    // past/present would be tough b/c need todays date...
-    // this.pastBookings = [];
-    // this.upcomingBookings = [];
   }
 
   findTotalSpent(rooms) {
@@ -16,7 +13,7 @@ class User {
           total += room.costPerNight;
         }
       })
-      return total
+      return parseInt(total.toString(), 10)
     }, 0)
   }
 

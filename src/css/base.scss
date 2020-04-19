@@ -1,6 +1,305 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+@import 'variables';
+@import 'mixins';
 
-body {
-  background-color: $primary-background;
+.login-screen {
+  @include twoColGrid()
 }
+
+.manager-screen {
+  @include twoColGrid()
+  background: #fff;
+  width: 90%;
+  margin: 10% auto;
+}
+
+main {
+  margin-top: 1%;
+}
+
+// .dash-h1 {
+//   text-align: left;
+// }
+
+.login-section {
+  @include box-shadow()
+  background-color: $purple;
+  margin: 1% auto;
+  width: 90%;
+}
+
+.hotel-image-section {
+  @include box-shadow()
+  margin: 1% auto;
+}
+
+.login-section input,
+.login-section label {
+  font-size: 4vh;
+  margin: 3%;
+  display: block;
+}
+
+.login-section button {
+  width: 40%;
+  font-size: 4vh;
+  margin: 5% 0% 5% 3%;
+}
+
+.sign-in-message {
+  font-family: $font;
+  font-size: 6vh;
+  margin: 1% 0%;
+  padding: 1%;
+}
+
+.login-h1 {
+  font-family: $headerFont;
+  display: $inline;
+  font-size: 6vh;
+
+}
+
+header {
+  background-color: $blue;
+  width: 103%;
+  margin: -1% 0 0 -1%;
+  text-align: center;
+}
+
+.dash-h1 {
+  @extend .login-h1;
+  text-align: left;
+  margin-left: 5%;
+}
+
+.user-dash-nav-section h1,
+.user-dash-nav-section h2 {
+  margin: 2% 5% 2% 5%
+}
+.manager-dash-nav-section h1,
+.manager-dash-nav-section h2 {
+  margin: 2% 5% 2% 5%
+}
+
+.hide {
+  display: none;
+}
+
+.manager-dashboard {
+  background-color: $purple;
+  margin: -10% auto;
+  width: 90%;
+}
+
+h4, 
+p {
+  display: $inline;
+}
+
+.manager-dashboard h2 {
+  text-align: center;
+}
+
+.manager-select-date-section {
+width: 70%;
+margin: 0 auto;
+}
+
+.avail-rooms-section {
+  @include manager-dash();
+  grid-column: 1 / 2;
+}
+
+.revenue-section {
+  @include manager-dash();
+  grid-column: 1 / 2;
+}
+
+.percent-occupied-section {
+  @include manager-dash();
+  grid-column: 1 / 2;
+}
+
+.manager-search-section {
+  margin: -10% auto;
+  width: 90%;
+  background-color: $green;
+  grid-column: 2 / 3;
+  grid-row: 1;
+}
+
+.manager-search-section h3 {
+  margin-left: 2%;
+  font-size: 4vh;
+  display: $inline;
+}
+
+.user-search,
+.search-button {
+  display: $inline;
+  margin-left: 2%;
+  width: 30%;
+}
+
+.user-search-results {
+  border: 1px solid red;
+  width: 80%;
+  height: 50vh;
+  margin: 0 0 0 3%;
+  overflow: scroll;
+  background-color: #fff;
+}
+
+.user-search-results h4 {
+  display: block;
+}
+
+.user-search-results button, {
+  display: $inline;
+  margin: 1% 0 5% 3% ;
+}
+
+.user-nav-section {
+  display: $inline;
+  margin-left: 20%;
+}
+.user-welcome-message {
+  display: $inline;
+  margin: 5%;
+  font-size: 5vh;
+}
+
+.user-screen {
+//  @extend .manager-screen;
+}
+
+.user-dashboard {
+  // @extend .manager-dashboard;
+  margin: 5%;
+  border: 1px solid orange;
+}
+
+.user-bookings-past {
+  @include user-dash()
+  border: 1px solid green;
+  grid-column: 1 / 2;
+  height: 200px;
+  overflow: scroll;
+}
+
+.user-bookings-upcoming {
+  @extend .user-bookings-past;
+  height: 100px;
+}
+
+.user-bookings-header {
+  display: block;
+}
+.user-total-spent {
+  @include user-dash()
+  border: 1px solid orange;
+  grid-column: 1 / 2;
+}
+
+.user-dashboard p {
+  text-align: left;
+}
+
+.user-book-section {
+  border: 1px solid green;
+  margin: 5%;
+//  @extend .manager-search-section;
+}
+
+.user-book-header {
+  margin: 3% 5%;
+  width: 90%;
+  text-align: left;
+  font-size: 4vh;
+  border-bottom: 1px solid
+}
+.user-avail-rooms-display {
+  list-style-type: none;
+  border: 1px solid black;
+  width: 90%;
+  // height: 300px;
+  overflow: scroll;
+  margin: 5% ;
+}
+
+.user-book-form label {
+  display: block;
+  padding-bottom: 2%;
+}
+.user-book-form {
+  text-align: left;
+  margin-left: 5%;
+}
+
+.user-book-form button {
+  display: block;
+  margin: 2% 0 0 0;
+}
+ .avail-room-listing input,
+ .avail-room-listing li
+  {
+   display: $inline;
+ }
+
+ .user-search-listing li {
+   display: $inline;
+ }
+
+
+
+ .available-room-listing {
+  width: 90%;
+  margin: 5%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 2px solid black;
+ }
+
+ .listing-pic-residential-suite {
+  grid-column: 1 /2;
+ }
+
+ .listing-overview {
+   grid-column: 2 /3;
+   margin: 0 10%;
+    h4 {
+      display: block;
+    }
+ }
+
+ .listing-amenities {
+   grid-column: 3 / 4;
+ }
+
+ .listing-book {
+   grid-column: 4 /5 ;
+    button {
+      font-size: 3vh;
+      width: 90%;
+      margin-top: 50%;
+      // vertical-align: text-bottom;
+    }
+ }
+
+ .booking-confirmation {
+  @extend .listing-book;
+    h4 {
+      display: block;
+    }
+
+ }
+
+ .thank-you-section {
+   border: 1px solid green;
+   margin: 5%;
+   padding: 1%;
+   background-color: $blue;
+   button {
+     margin: 1%;
+   }
+ }

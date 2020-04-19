@@ -1,0 +1,31 @@
+
+
+@mixin manager-dash() {
+    width: 80%;
+    margin: 2% 5%;
+    font-size: 3vh;
+}
+
+@mixin user-dash() {
+    width: 80%;
+    margin: 5% auto;
+    text-align: center;
+}
+
+@mixin twoColGrid() {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+@mixin box-shadow() {
+    -webkit-box-shadow: 10px 10px 53px -8px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 53px -8px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 53px -8px rgba(0,0,0,0.75);
+}
+
+// @mixin blurred-background() {
+//     background-image: url('../images/grandbudapest.png');
+//     filter: blur(5px);
+// -webkit-filter: blur(5px);
+// -moz-filter: blur(5px);
+// }

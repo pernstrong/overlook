@@ -2,11 +2,176 @@
 <html lang="en-US">
   <head>
     <title>The Overlook Hotel</title>
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet"> -->
   </head>
-  <body>
-    <h1></h1>
+  <header>
+    <h1 class="login-h1 ">Welcome to The Overlook Hotel</h1>
+
+    <section class="user-dash-nav-section hide ">
+    <h1 class="dash-h1 ">The Overlook Hotel</h1>
+    <h2 class="user-welcome-message"></h2>
+    <button class="user-dashboard-button">DASHBOARD</button>
+    <button class="book-a-room-button">BOOK A ROOM</button>
+    <button class="sign-out-button">SIGN OUT</button>
+  </section>
+
+    <section class="manager-dash-nav-section hide">
+    <h1 class="dash-h1 ">The Overlook Hotel</h1>
+    <h2 class="user-welcome-message">Manager View</h2>
+    <button class="sign-out-button">SIGN OUT</button>
+  </section>
+    
+  </header>
+<nav>
+
+</nav>
+<main>
+
+<section class="login-screen ">
+<section class="login-section">
+  <h3 class="sign-in-message"> Please sign in below</h3>
+  <label for="username">Username:</label>
+  <input class="username-login" name="username"type="text">
+  <label for="password">Password:</label>
+  <input class="password-login" type="password">
+  <button class="login-btn">Login</button>
+  <section class='incorrect-login'></section>
+</section>
+<section class="hotel-image-section">
+  <img src="./images/hotel2.jpg">
+</section>
+</section>
 
 
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+<section class="manager-screen hide ">
+<section class="manager-dashboard ">
+<h2>Manager Dashboard</h2>
+<h2 class="stats-for-day">Stats for Today</h2>
+<section class="manager-select-date-section">
+  <h4>Select a different date:</h4>
+  <input type="date" class="manager-date-input">
+  <button class="manager-select-date">Select Date</button>
+  </section>
+<section class="avail-rooms-section">
+  <h4 class="rooms-avail-header">Rooms Available:</h4>
+  <p class="avail-rooms-display"></p>
+</section>
+<section class="revenue-section">
+ <h4 class="revenue-header">Revenue:</h4>
+  <p class="revenue-display"></p>
+</section>
+<section class="percent-occupied-section">
+  <h4 class="occupancy-header">Occupancy:</h4>
+  <p class="occupancy-display"></p>
+</section>
+</section>
+<section class="manager-search-section">
+  <h3>Search Guests</h3>
+  <input type="text" class="user-search">
+  <button class="search-button">Find User</button>
+  <ul class="user-search-results"></ul> 
+</section>
+</section>
+
+
+<section class="user-screen  ">
+<section class="thank-you-display-area"></section>
+
+  <section class="user-dashboard  hide">
+    <!-- <h3 class="user-welcome-message ">Welcome Rae</h3> -->
+    <h4 class="user-bookings-header">Your Upcoming Reservations</h4>
+ <section class="user-bookings-upcoming">
+    <ul class="user-upcoming-bookings-display"></ul> 
+  </section>
+
+    <h4 class="user-bookings-header">Your Past Visits</h4>
+ <section class="user-bookings-past">
+    <ul class="user-past-bookings-display"></ul> 
+  </section>
+
+  <h4 class="user-total-spent-header">You have spent</h4>
+  <section class="user-total-spent ">
+    <p class="user-total-spent-display"></p>
+  </section>
+</section>
+
+
+
+    
+  
+  <section class="user-book-section hide ">
+    <h3 class="user-book-header">Book a Room</h3>
+    <section class="user-book-form ">
+      <label>Please Select a Date</label> 
+      <input type="date" class="user-book-input">
+      <button class="user-book-button">See Available Rooms</button>
+    </section>
+    <section class="filter-rooms-section hide"></section>
+      <section class="user-avail-rooms-display">
+<!-- 
+        <section class="available-room-listing">
+          <section class=""><img src="./images/ressuite2.png"></section>
+          <section class="listing-overview">
+          <h3>Type: Residential Suite</h3> -->
+          <!-- <h4>Room #5</h4>
+          <h4>$350/night</h4>
+        </section>
+        <section class="listing-amenities">
+          <h4>Amenities</h4>
+          <ul>
+            <li>View: Mountain</li>
+            <li>Bidet: Yes</li>
+            <li>Hot Tub: Yes</li>
+            <li>Pet Friendly: Yes</li>
+          </ul>
+        </section>
+        <section class="listing-book">
+          <button class="book-now-button">Book Now</button>
+        </section>
+        <section class="booking-confirmation hide">
+        <h3>Please Confirm Details</h3>
+        <h4>Date 4/20/2020</h4>
+        <h4>Cost $350 + tax</h4>
+        <button class="confirm-booking-button">Confirm Booking</button>
+        </section>
+      </section> -->
+
+      <!-- <section class="available-room-listing">
+        <section class="listing-pic-residential-suite"><img src="./images/ressuite2.png"></section>
+        <section class="listing-overview">
+        <h3>Type: Residential Suite</h3>
+        <h4>Room #5</h4>
+        <h4>$350/night</h4>
+      </section>
+      <section class="listing-amenities">
+        <h4>Amenities</h4>
+        <ul>
+          <li>View: Mountain</li>
+          <li>Bidet: Yes</li>
+          <li>Hot Tub: Yes</li>
+          <li>Pet Friendly: Yes</li>
+        </ul>
+      </section>
+      <section class="listing-book">
+        <button class="book-now-button">Book Now</button>
+      </section>
+      <section class="booking-confirmation hide">
+      <h3>Please Confirm Details</h3>
+      <h4>Date 4/20/2020</h4>
+      <h4>Cost $350 + tax</h4>
+      <button class="confirm-booking-button">Confirm Booking</button>
+      </section> -->
+
+  
+      </section>
+    </section>
+    
+
+  </section>
+</section>
+</section>
+</section>
+
+</main>
   </body>
 </html>

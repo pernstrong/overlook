@@ -7,7 +7,7 @@
   <header>
     <h1 class="login-h1 ">Welcome to The Overlook Hotel</h1>
 
-    <section class="user-dash-nav-section hide ">
+    <section class="user-dash-nav-section hide">
     <h1 class="dash-h1 ">The Overlook Hotel</h1>
     <h2 class="user-welcome-message"></h2>
     <button class="user-dashboard-button">DASHBOARD</button>
@@ -15,7 +15,7 @@
     <button class="sign-out-button">SIGN OUT</button>
   </section>
 
-    <section class="manager-dash-nav-section hide">
+    <section class="manager-dash-nav-section hide ">
     <h1 class="dash-h1 ">The Overlook Hotel</h1>
     <h2 class="user-welcome-message">Manager View</h2>
     <button class="sign-out-button">SIGN OUT</button>
@@ -30,26 +30,26 @@
 <section class="login-screen ">
 <section class="login-section">
   <h3 class="sign-in-message"> Please sign in below</h3>
-  <label for="username">Username:</label>
-  <input class="username-login" name="username"type="text">
-  <label for="password">Password:</label>
-  <input class="password-login" type="password">
+  <label for="username" id="username">Username:</label>
+  <input class="username-login" name="username" type="text" aria-labelledby="username">
+  <label for="password" id="password-login">Password:</label>
+  <input class="password-login" type="password" aria-labelledby="password-login">
   <button class="login-btn">Login</button>
   <section class='incorrect-login'></section>
 </section>
 <section class="hotel-image-section">
-  <img src="./images/hotel2.jpg">
+  <img src="./images/hotel2.jpg" alt="birds eye photo of hotel in mountains">
 </section>
 </section>
 
 
-<section class="manager-screen hide ">
+<section class="manager-screen  hide">
 <section class="manager-dashboard ">
 <h2>Manager Dashboard</h2>
 <h2 class="stats-for-day">Stats for Today</h2>
 <section class="manager-select-date-section">
-  <h4>Select a different date:</h4>
-  <input type="date" class="manager-date-input">
+  <h3 id="select-different-date">Select a different date:</h3>
+  <input type="text" class="manager-date-input" placeholder="Click to Select a Date" aria-labelledby="select-different-date">
   <button class="manager-select-date">Select Date</button>
   </section>
 <section class="avail-rooms-section">
@@ -66,47 +66,60 @@
 </section>
 </section>
 <section class="manager-search-section">
-  <h3>Search Guests</h3>
-  <input type="text" class="user-search">
+  <h3 id="search-guests">Search Guests</h3>
+  <input type="text" class="user-search" aria-labelledby="search-guests">
   <button class="search-button">Find User</button>
   <ul class="user-search-results"></ul> 
 </section>
 </section>
 
 
-<section class="user-screen  ">
+<section class="user-screen hide ">
 <section class="thank-you-display-area"></section>
 
-  <section class="user-dashboard  hide">
-    <!-- <h3 class="user-welcome-message ">Welcome Rae</h3> -->
-    <h4 class="user-bookings-header">Your Upcoming Reservations</h4>
- <section class="user-bookings-upcoming">
-    <ul class="user-upcoming-bookings-display"></ul> 
+<section class="user-dash-to-hide hide">
+  <section class="user-dashboard " >
+    <h2 class="user-dash-heading">Guest Dashboard</h2>
+    <section class="user-bookings-upcoming">
+      <h4 class="user-bookings-header">Your Upcoming Reservations</h4>
+    <ul class="user-upcoming-bookings-display">
+      <h4 class="no-upcoming-message">We Miss You... Book a new reservation today!</h4>
+    </ul> 
   </section>
 
+  <section class="user-bookings-past">
     <h4 class="user-bookings-header">Your Past Visits</h4>
- <section class="user-bookings-past">
     <ul class="user-past-bookings-display"></ul> 
   </section>
 
-  <h4 class="user-total-spent-header">You have spent</h4>
   <section class="user-total-spent ">
+    <h4 class="user-total-spent-header">Total Spent</h4>
     <p class="user-total-spent-display"></p>
   </section>
 </section>
-
-
-
+</section>
     
   
   <section class="user-book-section hide ">
+    
+   <section class="user-bood-heading-section">
     <h3 class="user-book-header">Book a Room</h3>
-    <section class="user-book-form ">
+
+      <section class="user-book-date-section">
+
+        <section class="select-date-section">
       <label>Please Select a Date</label> 
-      <input type="date" class="user-book-input">
-      <button class="user-book-button">See Available Rooms</button>
+    <input type="text" class="user-book-input" id="user-book-input" placeholder="Please select a date">
+    <button class="user-book-button" aria-labelledby="user-book-input">Available Rooms</button>
+  </section>
+
+    <section class="filter-rooms-section "></section>
+  </section>
+</section> 
+
+    <section class="user-book-form ">
     </section>
-    <section class="filter-rooms-section hide"></section>
+    
       <section class="user-avail-rooms-display">
 <!-- 
         <section class="available-room-listing">

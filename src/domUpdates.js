@@ -1,67 +1,81 @@
 import $ from 'jQuery'
+import datepicker from 'js-datepicker'
 
 const domUpdates = {
 
+  // handler function
   displayUserBookingsHandler(user, today) {
     let pastFunction = user.findPastBookings(today)
     let futureFunction = user.findFutureBookings(today)
     let pastDisplay = '.user-past-bookings-display'
     let futureDisplay = '.user-upcoming-bookings-display'
+    this.hideNoUpcomingResosMessage(futureFunction)
     this.formatAndDisplayBookings(pastFunction, pastDisplay) 
     this.formatAndDisplayBookings(futureFunction, futureDisplay)
   },
 
+  // display bookings for customers
   formatAndDisplayBookings(pastOrPresentMethod, pastOrPresentDisplay) {
     const formattedBookings = pastOrPresentMethod.reduce((formatteds, booking) => {
       const betterDate = this.formatDateForDisplay(booking.date)
-      formatteds.push(betterDate)
+      const roomNum = booking.roomNumber
+      const bookingObj = {
+        date: betterDate,
+        number: roomNum
+      }
+      formatteds.push(bookingObj)
       return formatteds
     }, [])
-    formattedBookings.forEach(booking =>  $(`${pastOrPresentDisplay}`).append(`
-    <li>
-    ${booking} 
-    </li>
-    `))
+    formattedBookings.forEach(booking =>  {
+      $(`${pastOrPresentDisplay}`).append(`
+    <li class="user-bookings-listings"><p class="list-date">Date of stay: ${booking.date}</p> <p class="list-number"> Room # ${booking.number}</p></li>
+    `)
+    })
   },
 
-  formatDateForDisplay(date) {
-    date = date.split('/')
-    const year = date.shift()
-    date.push(year)
-    return date.join('-')
+  // removes message if no upcoming resos
+  hideNoUpcomingResosMessage(futureFunction) {
+    if (futureFunction.length > 0) {
+      $('.no-upcoming-message').addClass('hide')
+    }
   },
 
+  // show how much a user has spent
   displayUserTotalSpent(user, rooms) {
     $('.user-total-spent-display').text(`$${user.findTotalSpent(rooms)}`)
   },
 
+  // show manager screen on login
   showManagerScreen() {
-    ('welcome manager')
     this.hideAllSections();
     $('.manager-screen').removeClass('hide')
 
   },
 
+  // show user screen on login
   showUserScreen(user, allRooms, today) {
     $('.user-dash-nav-section').removeClass('hide')
     $('.user-welcome-message').text(`Welcome ${user.giveFirstName()}`)
     this.hideAllSections();
-    // $('.user-screen').removeClass('hide')
-    $('.user-dashboard').removeClass('hide')
+    $('.user-screen').removeClass('hide')
+    $('.user-dash-to-hide').removeClass('hide')
     this.displayUserBookingsHandler(user, today);
     this.displayUserTotalSpent(user, allRooms)
   },
 
+  // user show dash section
   switchToDash() {
-    $('.user-dashboard').removeClass('hide')
+    $('.user-dash-to-hide').removeClass('hide')
     $('.user-book-section').addClass('hide')
   },
 
+  // user show book section
   switchToBook() {
-    $('.user-dashboard').addClass('hide')
+    $('.user-dash-to-hide').addClass('hide')
     $('.user-book-section').removeClass('hide')
   },
 
+  // hides all 3 major screens
   hideAllSections() {
     $('.login-section').addClass('hide')
     $('.manager-screen').addClass('hide')
@@ -70,8 +84,9 @@ const domUpdates = {
 
   },
 
-  showManagerDashInfo(hotel, today) {
-    let date = $('.manager-date-input').val();
+  // changes screen to manager dash
+  showManagerDashInfo(hotel, date) {
+    // let date = $('.manager-date-input').val();
     $('.manager-dash-nav-section').removeClass('hide')
     date = this.formatDate(date)
     this.displayRoomsAvail(hotel, date);
@@ -80,14 +95,16 @@ const domUpdates = {
 
   },
 
+  // change header in nav bar
   changeHeader() {
     $('.login-h1').addClass('hide')
     $('.dash-h1').removeClass('hide')
     $('header').css('text-align', 'left')
   },
 
-  updateStatsMessageDate() {
-    let date = $('.manager-date-input').val();
+  // next 4 are for displays on manager dashboard
+  updateStatsMessageDate(date) {
+    // let date = $('.manager-date-input').val();
     $('.stats-for-day').text(`Stats for ${this.formatDateForDisplay(date)}`)
   },
 
@@ -103,77 +120,79 @@ const domUpdates = {
     $('.occupancy-display').text(`${(hotel.findOccupancy(date) * 100)}%`)
   },
 
+   // format display date
+   formatDateForDisplay(date) {
+    date = date.split('/')
+    const year = date.shift()
+    date.push(year)
+    return date.join('-')
+  },
+
+  // format date to search
   formatDate(date) {
     return date.split('-').join('/')
   },
 
-  // showAvailableRooms(hotel, date) {
-  //   this.clearAvailRoomsDisplay()
-  //   date = this.formatDate(date)
-  //   hotel.findAvailableRooms(date).forEach(room => {
-  //     $('.user-avail-rooms-display').append(`
-  //     <section class="avail-room-listing">
-  //     <input type="checkbox" value="${room.number}"><li>Room #${room.number} - ${room.roomType}</li>
-  //     </section>
-  //     `)
-  //   })
-  //   this.addAvailRoomFilter()
-  // },
+  // creates ammenties and picture object for different room types
+  getGeneralRoomInfoToDisplay(roomType) {
+    let roomObj;
+    if (roomType === "residential suite") {
+      roomObj = {
+        image: "./images/ressuite2.png",
+        name: "Residential Suite",
+        view: "Mountain",
+        hasHotTub: "Yes",
+      }
+    } else if (roomType === "single room") {
+      roomObj = {
+        image: "./images/singleroom2.png",
+        name: "Single Room",
+        view: "Creek",
+        hasHotTub: "No",
+      }
+    } else if (roomType === "suite") {
+      roomObj = {
+        image: "./images/suite2.png",
+        name: "Suite",
+        view: "Creek",
+        hasHotTub: "Yes",
+      }
+    } else if (roomType === "junior suite") {
+      roomObj = {
+        image: "./images/jrsuite2.png",
+        name: "Junior Suite",
+        view: "Mountain",
+        hasHotTub: "Yes",
+      }
+    }
+    return roomObj
+  },
 
-getGeneralRoomInfoToDisplay(roomType) {
-  let roomObj;
-  if (roomType === "residential suite") {
- roomObj = {
-      image: "./images/ressuite2.png",
-      name: "Residential Suite",
-      view: "Mountain",
-      hasHotTub: "Yes",
+  // returns yes or no instead of t/f for bidet
+  bidetYes(room) {
+    if (room.bidet === true) {
+      return "Yes"
+    } else {
+      return "No"
     }
-  } else if (roomType === "single room") {
- roomObj = {
-      image: "./images/singleroom2.png",
-      name: "Single Room",
-      view: "Creek",
-      hasHotTub: "No",
-    }
-  } else if (roomType === "suite") {
- roomObj = {
-      image: "./images/suite2.png",
-      name: "Suite",
-      view: "Creek",
-      hasHotTub: "Yes",
-    }
-  } else if (roomType === "junior suite") {
- roomObj = {
-      image: "./images/jrsuite2.png",
-      name: "Junior Suite",
-      view: "Mountain",
-      hasHotTub: "Yes",
-    }
-  }
-  return roomObj
-},
+  },
 
-// returns yes or no instead of t/f for bidet
-bidetYes(room) {
-  if (room.bidet === true) {
-    return "Yes"
-  } else {
-    return "No"
-  }
-},
-
-  showAvailableRooms(hotel, date) {
+  // show available rooms
+  showAvailableRooms(hotel, date, duty, type) {
+    let rooms;
+    // date = this.formatDate(date)
+    if (duty === 'findAll') {
+      rooms = hotel.findAvailableRooms(date)
+    } else if (duty === 'filter') {
+      rooms = hotel.filterAvailRoomsByType(date, type)
+    }
     this.clearAvailRoomsDisplay()
-    date = this.formatDate(date)
-    console.log(hotel.findAvailableRooms(date))
-    hotel.findAvailableRooms(date).forEach(room => {
+    rooms.forEach(room => {
       const roomInfo = this.getGeneralRoomInfoToDisplay(room.roomType)
-      console.log(room.number)
       $('.user-avail-rooms-display').append(`
       <section class="available-room-listing" data-roomNum=${room.number}
       data-date=${date}>
-      <section class="listing-pic-residential-suite"><img src=${roomInfo.image}></section>
+      <section class="listing-pic"><img src=${roomInfo.image}></section>
       <section class="listing-overview">
       <h3>Type: ${roomInfo.name}</h3>
       <h4>Room #${room.number}</h4>
@@ -188,7 +207,7 @@ bidetYes(room) {
         <li>Pet Friendly: Yes</li>
       </ul>
     </section>
-    <section class="listing-book${room.number}">
+    <section class="listing-book listing-book${room.number}">
       <button class="book-now-button"  value="${room.costPerNight}">Book Now</button>
     </section>
     <section class="booking-confirmation${room.number} hide">
@@ -204,54 +223,64 @@ bidetYes(room) {
     this.addAvailRoomFilter()
   },
 
-    toggleBookAndConfirmation(roomNum) {
-      console.log('here')
-      $(`.booking-confirmation${roomNum}`).toggleClass('hide')
-      $(`.listing-book${roomNum}`).toggleClass('hide')
+  // toggle confirmation and listing screens (cancel button)
+  toggleBookAndConfirmation(roomNum) {
+    $(`.booking-confirmation${roomNum}`).toggleClass('hide')
+    $(`.listing-book${roomNum}`).toggleClass('hide')
 
-    },
+  },
 
-    clearBookingData() {
-      $('.user-book-input').val('')
-      $('.user-avail-rooms-display').html(' ')
-      // $('.user-book-form').html('')
-    },
+  // clear booking data
+  clearBookingData() {
+    $('.user-book-input').val('')
+    $('.user-avail-rooms-display').html(' ')
+    // $('.user-book-form').html('')
+  },
 
-
-
-
-
+  // error message if date selected is in the past
   displayPastDateMessage() {
     $('.user-avail-rooms-display').text('Please select a valid date')
     $('.manager-avail-rooms-display').text('Please select a valid date')
   },
 
-  showAvailableRoomsMngr(hotel, date) {
+  // show available rooms for manager search
+  showAvailableRoomsMngr(hotel, date, guest) {
     this.clearAvailRoomsDisplay()
     date = this.formatDate(date)
-    console.log(date)
     hotel.findAvailableRooms(date).forEach(room => {
       $('.manager-avail-rooms-display').append(`
-      <section class="avail-room-listing">
-      <input type="checkbox" value="${room.number}"><li>Room #${room.number} - ${room.roomType}</li>
+      <section class="manager-avail-room-listing">
+      <input type="checkbox" value="${room.number}">
+      <li>
+      <section class="manager-room-listing">
+      <p class="manager-room-listing-num">Room #${room.number}</p>
+      <p class="manager-room-listing-type">${room.roomType}</p>
+      <p class="manager-room-listing-cost">$${room.costPerNight}</p>
+      </section>
+      </li>
       </section>
       `)
     })
-    $('.manager-avail-rooms-display').prepend(`<button class="book-room-for-guest">Book for Guest</butotn>`)
+    $('.manager-avail-rooms-display').prepend(`<button class="book-room-for-guest" value="${guest.id}">Book for Guest</butotn>`)
   },
 
+  // clear manager search screen and input value
+  clearManagerSearch() {
+    $(".user-search-results").text('Booking Successful')
+    $('.user-search').val('')
+  },
 
-  
+  // clear user screens
   clearAvailRoomsDisplay() {
     $('.user-avail-rooms-display').text('')
     $('.manager-avail-rooms-display').text('')
     $('.filter-rooms-section').addClass('hide')
   },
 
+  // add filter to guest search for avail rooms 
   addAvailRoomFilter() {
     // $('.user-book-form').prepend('<button class="book-room">Book Room</button>')
     $('.filter-rooms-section').removeClass('hide')
-
     $('.filter-rooms-section').html(`
     <label for="filter-rooms">Filter by Room Type</label>
     <select id="filter-rooms">
@@ -265,17 +294,15 @@ bidetYes(room) {
     `)
   },
 
+  // display filtered rooms by room type
   displayRoomsAvailByType(date, type, hotel) {
     this.clearAvailRoomsDisplay()
     date = this.formatDate(date)
-    console.log(type)
-    console.log(hotel.filterAvailRoomsByType(date, type))
-    hotel.filterAvailRoomsByType(date, type).forEach(room => {
-      $('.user-avail-rooms-display').append(`
-      <input type="checkbox" value="${room.number}"><li>${room.number} -${room.roomType}</li>`)
-    })
+    const duty = "filter"
+    this.showAvailableRooms(hotel, date, duty, type)
   },
 
+  // display thank you to guest after booking reso
   displayThankYou(date) {
     this.clearBookingData()
     $('.user-book-section').addClass('hide')
@@ -290,24 +317,32 @@ bidetYes(room) {
     `)
   },
 
+  // show search results on manager screen for guest search
   displayManagerGuestSearchResults(manager, input, allRooms) {
     this.clearGuestSearchResultsSection()
     const results = manager.searchGuests(input)
     results.forEach(user => {
       $('.user-search-results').append(`
       <section class="user-search-listing">
+      <li>
+      <p class="user-search-name">${user.name}</p>
+      <section class="user-info-section">
+      <p class="user-search-id">Guest id: ${user.id}</p>
+      <p class="user-search-amount-spent">Amount Spent: $${user.findTotalSpent(allRooms)}</p>
       <button class="show-guest-details" value=${user.id}>Guest Details</button>
-      <li>${user.name}</li>
+      </li>
+      </section>
       <section>
       `)
     })
-    console.log(results)
   },
 
+  // clear guest search results on manager screen
   clearGuestSearchResultsSection() {
     $('.user-search-results').text('')
   },
 
+  // show guest info on manager screen
   showGuestDetails(guest, allRooms, today) {
     this.clearGuestSearchResultsSection()
     $('.user-search-results').html(`
@@ -323,13 +358,15 @@ bidetYes(room) {
     this.displayPastBookings(guest, today)
   },
 
+// display guests past reservations on manager screen
   displayPastBookings(guest, today) {
-    const pastBookings = guest.findPastBookings(today).sort((a, b) => a.date - b.date)
+    const pastBookings = guest.findPastBookings(today)
     pastBookings.forEach(booking => {
-      $('.past-bookings').append(`<li>${booking.date}</li>`)
+      $('.past-bookings').append(`<li>Date of stay: ${booking.date} -- Room # ${booking.roomNumber}</li>`)
     })
   },
 
+  // display guests upcoming reservationson manager screen
   displayUpcomingBookings(guest, today) {
     const futureBookings = guest.findFutureBookings(today).sort((a, b) => a.date - b.date)
     futureBookings.forEach(booking => {
@@ -340,34 +377,57 @@ bidetYes(room) {
     })
   },
   
+  // displays manager book for user screen
   displayBookForGuestScreen(guest) {
     $('.user-search-results').html(`
       <section class="manager-book-form">
       <label>Please Select a Date</label> 
-      <input type="date" class="manager-book-input">
-      <button class="manager-book-button">Available Rooms</button>
+      <input type="text" class="manager-book-input" placeholder="Select a Date">
+      <button class="manager-book-button" value="${guest.id}">Available Rooms</button>
       <section class="manager-avail-rooms-display"></<section>
       </section>
       `)
+    const picker2 = datepicker('.manager-book-input', {
+      formatter: (input, date, instance) => {
+        const value = date.toLocaleDateString()
+        input.value = value // => '1/1/2099'
+      }
+    })
   },
 
   signOut() {
     location.reload()
   },
   
-  returnToUserDash() {
-    $('.thank-you-section').remove()
-    $('.user-dashboard').removeClass('hide')
-    $('.user-screen').removeClass('hide')
+  // take back to user dash screen
+  returnToUserDash(user, allRooms, today) {
+    this.showUserScreen(user, allRooms, today)
+    // $('.thank-you-section').remove()
+    // $('.user-dash-to-hide').removeClass('hide')
+    // $('.user-screen').removeClass('hide')
   },
-  
-  returnToBook() {
+
+  // take back to book screen
+  returnToBook(user, allRooms, today) {
+    this.showUserScreen(user, allRooms, today)
     $('.thank-you-section').remove()
     $('.user-book-section').removeClass('hide')
     $('.user-screen').removeClass('hide')
   },
-  // $('.user-dashboard').removeClass('hide')
-  // $('.user-book-section').addClass('hide')
+
+  // message for successfully deleting a booking
+  displayDeleteConfirmation(bookingId) {
+    $('.user-search-results').text(`Reservation #${bookingId} was successfully deleted.`)
+  },
+
+  // message if no rooms available
+  displayNoRoomsAvailMessage(bookingId) {
+    $('.user-avail-rooms-display').html(`
+    <h3>
+    Sorry, there are no available rooms for selected date. Please try a different date.
+    </h3>
+    `)
+  },
 }
 
 

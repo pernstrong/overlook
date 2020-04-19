@@ -11,6 +11,8 @@ import './images/ressuite2.png'
 import './images/singleroom2.png'
 import './images/suite2.png'
 import './images/jrsuite2.png'
+import datepicker from 'js-datepicker'
+
 let allRooms = []
 let allUsers = []
 let allBookings = []
@@ -21,6 +23,7 @@ let today;
 let todayDateAndTime
 
 window.addEventListener('load', promiseAll)
+
 
 function promiseAll() {
   Promise.all([
@@ -37,6 +40,11 @@ function createDataSets(users, rooms, bookings) {
   createHotel()
   createManager()
   findTodaysDate()
+  console.log(allBookings.length)
+  // user = allUsers[32]
+  // domUpdates.changeHeader()
+  // domUpdates.showUserScreen(user, allRooms, today)
+
 //   console.log('user', user.bookings)
   // console.log('allbooks', allBookings)
 //   console.log(allRooms[0].bookings)
@@ -132,17 +140,50 @@ function assignCurrentUser(userNum) {
 }
 
 $('.manager-select-date').on('click', function() {
-  domUpdates.showManagerDashInfo(hotel)
-  domUpdates.updateStatsMessageDate()
+  let date = $('.manager-date-input').val()
+  date = formatFromPicker(date)
+  domUpdates.showManagerDashInfo(hotel, date)
+  domUpdates.updateStatsMessageDate(date)
 
 })
 
+function formatFromPicker(date) {
+  date = date.split('/')
+  if (date[0].length < 2) {
+    date[0] = `0${date[0]}`
+  }
+  if (date[1].length < 2) {
+    date[1] = `0${date[1]}`
+  }
+  let year = date.pop()
+  date.unshift(year)
+  return date.join('/')
+}
+
+const picker1 = datepicker('.manager-date-input', {
+  formatter: (input, date, instance) => {
+    const value = date.toLocaleDateString()
+    input.value = value // => '1/1/2099'
+  }
+})
+
+const picker3 = datepicker('.user-book-input', {
+  formatter: (input, date, instance) => {
+    const value = date.toLocaleDateString()
+    input.value = value // => '1/1/2099'
+  }
+})
+
+
+
 $('.user-book-button').on('click', function() {
   let date = $('.user-book-input').val()
+  date = formatFromPicker(date)
   if (isFutureDate(date) === false) {
     domUpdates.displayPastDateMessage()
   } else {
-    domUpdates.showAvailableRooms(hotel, date)
+    const duty = "findAll"
+    domUpdates.showAvailableRooms(hotel, date, duty)
   }
 })
 
@@ -179,7 +220,6 @@ function postNewBooking(user, roomNumber, date) {
   let objDate = formatDate(date)
   let roomNum = Number(roomNumber)
   let objID = Date.now().toString()
-  console.log(user, roomNum, objDate)
   fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
     method: 'POST',
     headers: {
@@ -199,6 +239,7 @@ function postNewBooking(user, roomNumber, date) {
   })
     .then(response => response.json())
     .catch(err => console.error(err))
+    promiseAll()
 }
 
 function formatDate(date) {
@@ -216,9 +257,12 @@ $('.search-button').on('click', function() {
   domUpdates.displayManagerGuestSearchResults(manager, input, allRooms)
 })
 
+
+
 // refactor!!!!!
 $('.user-search-results').on('click', function(event) {
   let id = event.target.value
+  // console.log(id)
   let guest = findGuestById(id)
   let date = $('.manager-book-input').val()
   let bookingId = $('.delete-booking').val()
@@ -227,20 +271,22 @@ $('.user-search-results').on('click', function(event) {
   if (event.target.classList.contains('show-guest-details')) {
     domUpdates.showGuestDetails(guest, allRooms, today)
   } else if (event.target.classList.contains('manager-book-button')) {
+    date = formatFromPicker(date) 
     if (isFutureDate(date) === false) {
       domUpdates.displayPastDateMessage()
     } else {
-      domUpdates.showAvailableRoomsMngr(hotel, date)
+      domUpdates.showAvailableRoomsMngr(hotel, date, guest)
     }
   } else if (event.target.classList.contains('book-for-guest')) {
     domUpdates.displayBookForGuestScreen(guest)
 
   } else if (event.target.classList.contains('book-room-for-guest'))  {
-    console.log(guest)
+    date = formatFromPicker(date) 
     postNewBooking(guest, roomNumber, date)
-
+    domUpdates.clearManagerSearch()
   } else if (event.target.classList.contains('delete-booking')) {
     deleteBooking(bookingId)
+    domUpdates.displayDeleteConfirmation(bookingId)
   }
 })
 // $('.user-search-results').on('click', function(event) {
@@ -279,22 +325,25 @@ function findGuestById(id) {
 }
 
 function deleteBooking(bookingId) {
-  let id = bookingId
   domUpdates.clearGuestSearchResultsSection()
-  $('.user-search').val('')
-  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings' + '/' + id, {
+  // $('.user-search').val('')
+  let id = Number(bookingId)
+  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
     method: 'DELETE',
-    // headers: {
-    //   'Content-Type': 'application/json'
-    // },
-    // body: JSON.stringify({
-    //   id: bookingId,
-    // })
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: 
+    JSON.stringify(
+      {
+      "id": id,
+    }
+    )
   })
-    .then(response => response.json())
-    // .then(res => res.text())
-    // .then(text => console.log(text))
-    .catch(err => console.error(err))
+    // .then(response => response.json())
+    .then(res => res.text())
+    .then(text => console.log(text))
+    // .catch(err => console.error(err))
 }
 
 function isFutureDate(date) {
@@ -328,13 +377,11 @@ $('.user-dashboard-button').on('click', function() {
 $('.user-avail-rooms-display').on('click', function(event) {
   const roomNum = event.target.closest('.available-room-listing').dataset.roomnum
   const date = event.target.closest('.available-room-listing').dataset.date
-  console.log(roomNum)
   if (event.target.classList.contains('book-now-button')) {
     domUpdates.toggleBookAndConfirmation(roomNum)
   } else if (event.target.classList.contains('cancel-booking-button')) {
     domUpdates.toggleBookAndConfirmation(roomNum)
   } else if (event.target.classList.contains('confirm-booking-button')) {
-    console.log(user, Number(roomNum), date)
     hotel.addBooking(user, Number(roomNum), date)
     postNewBooking(user, Number(roomNum), date)
     clearData()
@@ -345,8 +392,8 @@ $('.user-avail-rooms-display').on('click', function(event) {
 
 $('.user-screen').on('click', function(event) {
   if (event.target.classList.contains('return-to-dashboard')) {
-    domUpdates.returnToUserDash()
+    domUpdates.returnToUserDash(user, allRooms, today)
   } else if (event.target.classList.contains('book-again')) {
-    domUpdates.returnToBook()
+    domUpdates.returnToBook(user, allRooms, today)
   }
 })

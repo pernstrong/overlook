@@ -18,9 +18,15 @@
 }
 
 @mixin box-shadow() {
-    -webkit-box-shadow: 10px 10px 53px -8px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 10px 53px -8px rgba(0,0,0,0.75);
-box-shadow: 10px 10px 53px -8px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -2px 8px 30px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -2px 8px 30px 0px rgba(0,0,0,0.75);
+    box-shadow: -2px 8px 30px 0px rgba(0,0,0,0.75);
+}
+
+@mixin inset() {
+    -webkit-box-shadow: inset -2px 8px 30px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: inset -2px 8px 30px 0px rgba(0,0,0,0.75);
+box-shadow: inset -2px 8px 30px 0px rgba(0,0,0,0.75);
 }
 
 // @mixin blurred-background() {

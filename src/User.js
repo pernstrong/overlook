@@ -20,7 +20,7 @@ class User {
 
   findPastBookings(date) {
     const todayDateArray = date.split('/')
-   return this.bookings.filter(booking => {
+    return this.bookings.filter(booking => {
       const bookingDateArray = booking.date.split('/')
       if (Number(todayDateArray[0]) > Number(bookingDateArray[0])) {
         return booking

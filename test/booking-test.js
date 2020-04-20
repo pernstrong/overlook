@@ -1,6 +1,6 @@
 import Booking from '../src/Booking';
-const spies = require('chai-spies');
-chai.use(spies)
+// const spies = require('chai-spies');
+// chai.use(spies)
 import chai from 'chai';
 const expect = chai.expect;
 
@@ -8,14 +8,14 @@ const expect = chai.expect;
 
 describe('Booking', function() {
   
-    let booking1;
+  let booking1;
 
   this.beforeEach(function () {
    
     booking1 = new Booking({id: "abc123", userID: 1, date: "2020/4/15", roomNumber: 2, roomServiceCharges: []})
   })
   
-    it('should have be a function', function() {
+  it('should have be a function', function() {
     expect(Booking).to.be.a('function');
   });
 

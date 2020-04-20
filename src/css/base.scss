@@ -5,16 +5,20 @@
 .login-screen {
   @include twoColGrid()
 }
-
+body {
+background: $background;
+}
 .manager-screen {
   @include twoColGrid()
-  background: #fff;
+  background: $background;
   width: 90%;
-  margin: 10% auto;
+  margin: 8% auto;
 }
 
 main {
   margin-top: 1%;
+    background: $background;
+
 }
 
 // .dash-h1 {
@@ -23,14 +27,14 @@ main {
 
 .login-section {
   @include box-shadow()
-  background-color: $purple;
-  margin: 1% auto;
+  background-color: $color2;
+  margin: 10% auto;
   width: 90%;
 }
 
 .hotel-image-section {
   @include box-shadow()
-  margin: 1% auto;
+  margin: 10% auto;
 }
 
 .login-section input,
@@ -61,7 +65,7 @@ main {
 }
 
 header {
-  background-color: $blue;
+  background-color: $nav;
   width: 103%;
   margin: -1% 0 0 -1%;
   text-align: center;
@@ -71,15 +75,23 @@ header {
   @extend .login-h1;
   text-align: left;
   margin-left: 5%;
+  grid-column: 1 / 2;
 }
 
 .user-dash-nav-section h1,
 .user-dash-nav-section h2 {
-  margin: 2% 5% 2% 5%
+  margin: 2%;
 }
+
 .manager-dash-nav-section h1,
 .manager-dash-nav-section h2 {
-  margin: 2% 5% 2% 5%
+  margin: 2% 5% 2% 3%
+}
+
+.manager-dash-nav-section {
+  button {
+    margin-left: 25%;
+  }
 }
 
 .hide {
@@ -88,9 +100,9 @@ header {
 
 .manager-dashboard {
   @include box-shadow();
-  background-color: $purple;
+  background-color: $color1;
   margin: -10% auto;
-  width: 90%;
+  width: 85%;
 }
 
 h4, 
@@ -108,34 +120,68 @@ p {
 }
 
 .manager-select-date-section {
-
 width: 70%;
 margin: 5% auto;
 text-align: center;
+  input {
+    font-size: 2vh;
+    padding: 2%;
+  }
+  button {
+    font-size: 2vh;
+    padding: 2%;
+    margin-left: 2%;
+  }
 }
+
 
 .avail-rooms-section {
   @include manager-dash();
   grid-column: 1 / 2;
+  p {
+    font-size: 4vh;
+    margin-left: 5%;
+    font-weight: bold;
+  }
 }
 
 .revenue-section {
   @include manager-dash();
   grid-column: 1 / 2;
+  p {
+    font-size: 4vh;
+    margin-left: 5%;
+    font-weight: bold;
+  }
 }
 
 .percent-occupied-section {
   @include manager-dash();
   grid-column: 1 / 2;
+  p {
+    font-size: 4vh;
+    margin-left: 5%;
+    font-weight: bold;
+  }
 }
 
 .manager-search-section {
   @include box-shadow();
   margin: -10% auto;
-  width: 90%;
+  width: 85%;
   background-color: $green;
   grid-column: 2 / 3;
   grid-row: 1;
+  input {
+    font-size: 2vh;
+    padding: 1%;
+  }
+  button {
+    display: inline-block;
+    width: 20%;
+    font-size: 2vh;
+    padding: 1%;
+  }
 }
 
 .manager-search-section h3 {
@@ -190,12 +236,23 @@ text-align: center;
 }
 
 .user-search-results {
-  border: 1px solid red;
+  // border: 1px solid red;
   width: 80%;
   height: 50vh;
-  margin: 0 0 0 3%;
+  // margin: 0 0 0 3%;
+  margin: 0 auto;
   overflow: scroll;
-  background-color: #fff;
+  background-color: $background;
+  h2 {
+    // display: $inline;
+  }
+  button {
+    width: 50%;
+    align: center
+  }
+  li {
+
+  }
 }
 
 .user-search-results h4 {
@@ -207,15 +264,53 @@ text-align: center;
   margin: 1% 0 5% 3% ;
 }
 
-.user-nav-section {
+.user-nav-dash-section {
   display: $inline;
   margin-left: 20%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 .user-welcome-message {
   display: $inline;
-  margin: 5%;
+  margin: 5% 0% 5% 2%;
   font-size: 5vh;
+  grid-column: 2 / 3;
+  // grid-row: 1
 }
+.user-dash-buttons {
+  grid-column: 3 / 4;
+  // grid-row: 1;
+  // margin-left: 1%;
+  
+  display: inline-block;
+}
+
+.book-a-room-button {
+  font-size: 2vh;
+  padding: 1%;
+  margin: 1% 2% 0 0;
+  display: inline-block;
+  border: 1px solid black;
+  font-weight: bold;
+}
+
+.user-dashboard-button {
+  @extend .book-a-room-button;
+}
+
+.sign-out-button {
+  @extend .book-a-room-button;
+}
+
+.dashboard-button-text {
+  visibility: hidden;
+}
+.dashboard-button-text:hover {
+  visibility: visibile;
+}
+
+
+
 
 .user-screen {
 //  @extend .manager-screen;
@@ -227,7 +322,7 @@ text-align: center;
   margin: 5%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  background-color: $lightPurple;
+  background-color: $color2;
   border-radius: 2%;
 
 
@@ -246,9 +341,12 @@ text-align: center;
   grid-row: 2;
   height: 300px;
   overflow: scroll;
-  background-color: #fff;
+  background-color: $background;
   border: 1px solid black;
   border-radius: 2%;
+  p {
+    margin: 3% 5% 3% 0;
+  }
 }
 
 .user-bookings-upcoming {
@@ -256,6 +354,9 @@ text-align: center;
   height: 300px;
   grid-column: 1 / 2;
   grid-row: 2;
+  p {
+    margin: 3% 5% 3% 0;
+  }
 }
 
 .user-bookings-header {
@@ -264,14 +365,14 @@ text-align: center;
   padding: 3% 0;
   position: sticky;
   top: 0px;
-  background-color: #fff;
+  background-color: $background;
   font-size: 3vh;
 }
 .user-total-spent {
   @include user-dash()
   grid-column: 3 / 4;
   grid-row: 2;
-  background-color: #fff;
+  background-color: $background;
   border: 1px solid black;
   border-radius: 2%;
 
@@ -290,21 +391,22 @@ text-align: center;
   @include box-shadow()
   border: 1px solid green;
   margin: 5%;
-  background-color: $lightGreen;
+  background-color: $color3;
 
 //  @extend .manager-search-section;
 }
 
-.user-bood-heading-section {
+.user-book-heading-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  // border-bottom: 1px solid black;
 }
 
 .user-book-header {
   margin: 3% 5%;
   width: 90%;
   text-align: left;
-  font-size: 4vh;
+  font-size: 5vh;
   border-bottom: 1px solid;
   // display: inline-block;
 }
@@ -312,7 +414,7 @@ text-align: center;
 .user-book-date-section {
   // display: inline-block;
   width: 90%;
-  margin: 5% 0 0 5%;
+  margin: 1% 0 0 5%;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
@@ -320,28 +422,41 @@ text-align: center;
 .select-date-section {
   grid-column: 1 / 2;
   width: 80%;
-  margin: 5%;
+  margin: 7%;
     input {
       margin: 5% 0 0 0;
+      width: 80%;
+      font-size: 2vh;
     }
     button {
-      margin: 2% 0 0 0;
-      width: 55%;
+      margin: 5% 0 0 0;
+      width: 80%;
+      font-size: 2vh;
+      padding: 1%;
+      // border-radius: 4%;
     }
 }
 
+.user-date-select,
+.filter-rooms {
+  font-size: 4vh;
+}
+
 .filter-rooms-section {
-  width: 80%;
+  @extend .select-date-section;
+   width: 85%;
   grid-column: 2 / 3;
-  margin: 5%;
+  // margin: 5%;
     select {
+      width: 80%;
       margin: 5% 0 0 0;
+      font-size: 2vh;
     }
-    button {
-      margin: 2% 0 0 0;
-      display: block;
-      width: 60%;
-    }
+  //   button {
+  //     margin: 2% 0 0 0;
+  //     display: block;
+  //     width: 60%;
+  //   }
   // border: 1px solid white;
 
 }
@@ -353,6 +468,13 @@ text-align: center;
   // height: 300px;
   overflow: scroll;
   margin: 2% 5%;
+}
+
+.confirm-booking-button,
+.cancel-booking-button {
+  width: 80%;
+  font-size: 2vh;
+  margin-top: 3%;
 }
 
 .user-total-spent-display {
@@ -398,10 +520,40 @@ text-align: center;
  .user-info-section {
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;
+   width: 95%;
+   button {
+    width: 60%;
+    // display: inline-block;
+  }
  }
 
  .show-guest-details {
    width: 80%;
+ }
+
+ .upcoming-bookings{
+  //  width: 100%;
+  li {
+   display: inline-block;
+   list-style-type: square;
+   margin: 3% 0 0 -10%;
+  //  border: 1px solid black;
+   width: 100%;
+
+  //  color: red;
+ }
+ p {
+   margin: 2% 3%;
+ }
+}
+
+.past-bookings p {
+  margin: 2% 3%;
+}
+
+ .delete-booking {
+   width: 100%;
+   display: inline-block
  }
 
 
@@ -411,8 +563,8 @@ text-align: center;
   margin: 5%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border: 2px solid black;
-  background-color: #fff;
+  // border: 2px solid black;
+  background-color: $background;
  }
 
  .listing-pic {
@@ -443,18 +595,20 @@ text-align: center;
  }
 
  .booking-confirmation {
-  @extend .listing-book;
+  // @extend .listing-book;
     h4 {
-      display: block;
-    }
+      margin: 3%;
+      display: block
+        }
 
  }
 
  .thank-you-section {
-   border: 1px solid green;
+   @include box-shadow()
+  //  border: 1px solid green;
    margin: 5%;
    padding: 1%;
-   background-color: $blue;
+   background-color: $color2;
    button {
      margin: 1%;
    }
@@ -474,4 +628,70 @@ text-align: center;
  input,
  button {
    cursor: pointer;
+ }
+
+ @media screen and (max-width: 900px) {
+
+  .login-screen {
+    display: default;
+    margin-top: 10%;
+  }
+
+  .login-section {
+    @include box-shadow()
+    background-color: $color2;
+    margin: 0% auto;
+    width: 90%;
+    grid-column: 1 / 3;
+  }
+  
+  .hotel-image-section {
+    display: none;
+  }
+
+.manager-dash-nav-section h1,
+.manager-dash-nav-section h2 {
+  font-size: 120%;
+  margin: 2% 5% 2% 5%
+}
+  
+
+.manager-screen {
+  @include twoColGrid()
+  background: $background;
+  width: 90%;
+  margin: 10% auto;
+}
+
+.manager-dashboard {
+  // @include box-shadow();
+  background-color: $color2
+  ;
+  margin: -5% 0 5% 0;
+  width: 95%;
+  grid-column: 1 / 3;
+}
+
+.manager-search-section {
+  // @include box-shadow();
+  margin: 0;
+  width: 95%;
+  background-color: $green;
+  grid-column: 1 / 3;
+  grid-row: 2;
+}
+
+.available-room-listing {
+  @include box-shadow()
+ width: 90%;
+ margin: 5%;
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ border: 2px solid black;
+ background-color: $background;
+  img {
+    display: none;
+  }
+}
+
  }

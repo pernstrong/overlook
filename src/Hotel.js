@@ -45,12 +45,11 @@ class Hotel {
   }
 
   addBooking(user, roomNumber, date) {
-    // let room = this.allRooms.find(room => roomNumber === room.number)
     const booking = {
       id: Date.now().toString(),
       userID: user.id,
-      date: date,
-      roomNumber: roomNumber,
+      date,
+      roomNumber,
       roomServiceCharges: []
     }
     this.allBookings.push(booking)

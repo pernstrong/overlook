@@ -81,7 +81,6 @@ const domUpdates = {
     $('.manager-screen').addClass('hide')
     // $('.user-screen').addClass('hide')
     $('.hotel-image-section').addClass('hide')
-
   },
 
   // changes screen to manager dash
@@ -92,7 +91,6 @@ const domUpdates = {
     this.displayRoomsAvail(hotel, date);
     this.displayRevenue(hotel, date);
     this.displayOccupancy(hotel, date)
-
   },
 
   // change header in nav bar
@@ -120,8 +118,8 @@ const domUpdates = {
     $('.occupancy-display').text(`${(hotel.findOccupancy(date) * 100)}%`)
   },
 
-   // format display date
-   formatDateForDisplay(date) {
+  // format display date
+  formatDateForDisplay(date) {
     date = date.split('/')
     const year = date.shift()
     date.push(year)
@@ -210,10 +208,10 @@ const domUpdates = {
     <section class="listing-book listing-book${room.number}">
       <button class="book-now-button"  value="${room.costPerNight}">Book Now</button>
     </section>
-    <section class="booking-confirmation${room.number} hide">
+    <section class="booking-confirmation${room.number} booking-confirmation hide">
     <h3>Please Confirm Details</h3>
-    <h4>Date ${date}</h4>
-    <h4>Cost $${room.costPerNight} + tax</h4>
+    <h4>Date: ${date}</h4>
+    <h4>Cost: $${room.costPerNight} + tax</h4>
     <button class="confirm-booking-button" value="${room.number}">Confirm Booking</button>
     <button class="cancel-booking-button" value="${room.number}">Cancel</button>
     </section>
@@ -239,8 +237,12 @@ const domUpdates = {
 
   // error message if date selected is in the past
   displayPastDateMessage() {
-    $('.user-avail-rooms-display').text('Please select a valid date')
-    $('.manager-avail-rooms-display').text('Please select a valid date')
+    $('.user-avail-rooms-display').html(`
+    <h3>Please select a valid date</h3>
+    `)
+    $('.manager-avail-rooms-display').html(`
+    <h3>Please select a valid date</h3>
+    `)
   },
 
   // show available rooms for manager search
@@ -282,7 +284,7 @@ const domUpdates = {
     // $('.user-book-form').prepend('<button class="book-room">Book Room</button>')
     $('.filter-rooms-section').removeClass('hide')
     $('.filter-rooms-section').html(`
-    <label for="filter-rooms">Filter by Room Type</label>
+    <label for="filter-rooms" class="filter-rooms">Filter by Room Type</label>
     <select id="filter-rooms">
       <option value=""> Choose a Room Type</option>
       <option value="single room">Single Room</option>
@@ -306,6 +308,7 @@ const domUpdates = {
   displayThankYou(date) {
     this.clearBookingData()
     $('.user-book-section').addClass('hide')
+
     $('.thank-you-display-area').html(`
     <section class="thank-you-section">
     <h2>Thank you for booking your stay with us!</h2>
@@ -347,7 +350,7 @@ const domUpdates = {
     this.clearGuestSearchResultsSection()
     $('.user-search-results').html(`
     <h2>Guest: ${guest.name}</h2>
-    <button class="book-for-guest" value=${guest.id}>Book Room</button>
+    <button class="book-for-guest" value=${guest.id}>Book Room for Guest</button>
     <h4>Upcoming Bookings:</h4>
     <ul class="upcoming-bookings"></ul>
     <h4>Past Bookings:</h4> 
@@ -358,11 +361,14 @@ const domUpdates = {
     this.displayPastBookings(guest, today)
   },
 
-// display guests past reservations on manager screen
+  // display guests past reservations on manager screen
   displayPastBookings(guest, today) {
     const pastBookings = guest.findPastBookings(today)
     pastBookings.forEach(booking => {
-      $('.past-bookings').append(`<li>Date of stay: ${booking.date} -- Room # ${booking.roomNumber}</li>`)
+      $('.past-bookings').append(`<li>
+      <p>Date: ${this.formatDateForDisplay(booking.date)}</p> 
+      <p>Room #${booking.roomNumber}</p>
+      </li>`)
     })
   },
 
@@ -371,8 +377,11 @@ const domUpdates = {
     const futureBookings = guest.findFutureBookings(today).sort((a, b) => a.date - b.date)
     futureBookings.forEach(booking => {
       $('.upcoming-bookings').append(`
-      <li>${booking.date}</li>
+      <li class="search-upcoming-books">
+      <p>${this.formatDateForDisplay(booking.date)}</p>
+      <p>Room #${booking.roomNumber}</p>
       <button class="delete-booking" value="${booking.id}">Delete Booking</button>
+      </li>
       `)
     })
   },
@@ -400,16 +409,14 @@ const domUpdates = {
   },
   
   // take back to user dash screen
-  returnToUserDash(user, allRooms, today) {
-    this.showUserScreen(user, allRooms, today)
-    // $('.thank-you-section').remove()
-    // $('.user-dash-to-hide').removeClass('hide')
-    // $('.user-screen').removeClass('hide')
+  returnToUserDash() {
+    $('.thank-you-section').remove()
+    $('.user-dash-to-hide').removeClass('hide')
+    $('.user-screen').removeClass('hide')
   },
 
   // take back to book screen
-  returnToBook(user, allRooms, today) {
-    this.showUserScreen(user, allRooms, today)
+  returnToBook() {
     $('.thank-you-section').remove()
     $('.user-book-section').removeClass('hide')
     $('.user-screen').removeClass('hide')
@@ -421,7 +428,7 @@ const domUpdates = {
   },
 
   // message if no rooms available
-  displayNoRoomsAvailMessage(bookingId) {
+  displayNoRoomsAvailMessage() {
     $('.user-avail-rooms-display').html(`
     <h3>
     Sorry, there are no available rooms for selected date. Please try a different date.

@@ -7,7 +7,7 @@ class Hotel {
 
   findOccupancy(date) {
     const bookingsOnDate = this.allBookings.filter(booking => booking.date === date)
-    return bookingsOnDate.length / this.allRooms.length
+    return (bookingsOnDate.length / this.allRooms.length).toFixed(2)
   }
 
   findAvailableRooms(date) {
@@ -28,7 +28,7 @@ class Hotel {
   }
 
   findRevenue(date) {
-    return this.allBookings.reduce((revenue, booking) => {
+    const total = this.allBookings.reduce((revenue, booking) => {
       this.allRooms.forEach(room => {
         if (room.number === booking.roomNumber && booking.date === date) {
           revenue += room.costPerNight;
@@ -36,6 +36,7 @@ class Hotel {
       })
       return revenue
     }, 0)
+    return total.toFixed(2)
   }
 
   filterAvailRoomsByType(date, type) {
@@ -44,12 +45,11 @@ class Hotel {
   }
 
   addBooking(user, roomNumber, date) {
-    // let room = this.allRooms.find(room => roomNumber === room.number)
     const booking = {
       id: Date.now().toString(),
       userID: user.id,
-      date: date,
-      roomNumber: roomNumber,
+      date,
+      roomNumber,
       roomServiceCharges: []
     }
     this.allBookings.push(booking)

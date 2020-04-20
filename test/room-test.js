@@ -1,19 +1,19 @@
 import Room from '../src/Room';
-const spies = require('chai-spies');
-chai.use(spies)
+// const spies = require('chai-spies');
+// chai.use(spies)
 import chai from 'chai';
 const expect = chai.expect;
 
 describe('Room', function() {
   
-    let room1;
+  let room1;
 
   this.beforeEach(function () {
    
     room1 = new Room({number: 12, roomType: 'suite', bidet: true, bedSize: 'king', numBeds: 1, costPerNight: 500})
   });
 
-    it('should be a function', function() {
+  it('should be a function', function() {
 
     expect(Room).to.be.a('function');
   });
@@ -60,7 +60,7 @@ describe('Room', function() {
     room1.bookings.push(booking1)
     room1.bookings.push(booking2)
 
-    expect(room1.bookings).to.deep.equal([{id: "abc123", userID: 1, date: "2020/4/15", roomNumber: 2, roomServiceCharges: []},{id: "abc1234", userID: 2, date: "2020/4/17", roomNumber: 2, roomServiceCharges: []}]);
+    expect(room1.bookings).to.deep.equal([{id: "abc123", userID: 1, date: "2020/4/15", roomNumber: 2, roomServiceCharges: []}, {id: "abc1234", userID: 2, date: "2020/4/17", roomNumber: 2, roomServiceCharges: []}]);
   });
 
   it('should be able to check if it is booked given a date and return true if it is booked', function() {

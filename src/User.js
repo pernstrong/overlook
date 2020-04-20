@@ -7,7 +7,7 @@ class User {
   }
 
   findTotalSpent(rooms) {
-    return this.bookings.reduce((total, booking) => {
+    const total = this.bookings.reduce((total, booking) => {
       rooms.forEach(room => {
         if (room.number === booking.roomNumber) {
           total += room.costPerNight;
@@ -15,11 +15,12 @@ class User {
       })
       return parseInt(total.toString(), 10)
     }, 0)
+    return total.toFixed(2)
   }
 
   findPastBookings(date) {
     const todayDateArray = date.split('/')
-   return this.bookings.filter(booking => {
+    return this.bookings.filter(booking => {
       const bookingDateArray = booking.date.split('/')
       if (Number(todayDateArray[0]) > Number(bookingDateArray[0])) {
         return booking

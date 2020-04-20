@@ -1,4 +1,4 @@
-import domUpdates from '../src/domUpdates';
+// import domUpdates from '../src/domUpdates';
 const spies = require('chai-spies');
 chai.use(spies)
 import chai from 'chai';

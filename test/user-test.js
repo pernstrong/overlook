@@ -1,9 +1,9 @@
 import User from '../src/User';
-// const chai = require('chai')
+const chai = require('chai')
 const spies = require('chai-spies');
 chai.use(spies)
 
-import chai from 'chai';
+// import chai from 'chai';
 const expect = chai.expect;
 
 describe('User', function() {
@@ -48,7 +48,7 @@ describe('User', function() {
     expect(user1.bookings[1].roomNumber).to.equal(13)
   });
 
-  it('should hold its past room bookings', function() {
+  it('should be able to findits past room bookings', function() {
     const booking1 = {id: 'abc123', userID: 9, date: '2020/02/04', roomNumber: 15, roomServiceCharges: []}
     const booking2 = {id: 'five', userID: 2, date: '2020/05/03', roomNumber: 13, roomServiceCharges: []}
 
@@ -60,7 +60,7 @@ describe('User', function() {
     expect(user1.findPastBookings(today)).to.deep.equal([{id: 'abc123', userID: 9, date: '2020/02/04', roomNumber: 15, roomServiceCharges: []}])
   });
   
-  it('should hold its upcoming room bookings', function() {
+  it('should be able to find its upcoming room bookings', function() {
 
     const booking1 = {id: 'ten', userID: 9, date: '2020/04/04', roomNumber: 12, roomServiceCharges: []}
     const booking2 = {id: 'eleven', userID: 2, date: '2020/06/03', roomNumber: 10, roomServiceCharges: []}
@@ -71,11 +71,6 @@ describe('User', function() {
     user1.bookings.push(booking2)
     
     expect(user1.findFutureBookings(today)).to.deep.equal([{id: 'eleven', userID: 2, date: '2020/06/03', roomNumber: 10, roomServiceCharges: []}])
-  });
-  
-  it.skip('should be able to book a room', function() {
-
-    // expect(user1.).to.equal()
   });
 
   it('should calculate how much the user has spent on rooms', function() {
@@ -91,7 +86,15 @@ describe('User', function() {
     user1.bookings.push(booking2)
     
     
-    expect(user1.findTotalSpent(rooms)).to.equal(750)
+    expect(user1.findTotalSpent(rooms)).to.equal("750.00")
   });
+
+  it('should call findPastBookings method when findFutureBookings method is called', function() {
+
+
+    chai.spy.on(user1, 'findPastBookings', () => {})
+    user1.findFutureBookings("2020/05/05")
+    expect(user1.findPastBookings).to.have.been.called(1)
+  })
 
 });

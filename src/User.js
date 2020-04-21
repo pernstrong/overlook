@@ -6,6 +6,10 @@ class User {
     this.totalSpent = 0;
   }
 
+  giveFirstName() {
+    return this.name.split(' ')[0]
+  }
+
   findTotalSpent(rooms) {
     const total = this.bookings.reduce((total, booking) => {
       rooms.forEach(room => {
@@ -41,9 +45,6 @@ class User {
     })
   }
 
-  giveFirstName() {
-    return this.name.split(' ')[0]
-  }
 }
 
 

@@ -54,6 +54,7 @@ class Hotel {
     }
     this.allBookings.push(booking)
   }
+  
 }
 
 

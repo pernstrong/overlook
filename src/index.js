@@ -44,10 +44,10 @@ function createDataSets(users, rooms, bookings) {
   createHotel()
   createManager()
   findTodaysDate()
-  console.log(allBookings.length)
+  // console.log(allBookings.length)
   // user = allUsers[32]
   // domUpdates.changeHeader()
-  // domUpdates.showUserScreen(user, allRooms, today)
+  // domUpdates.showUserScreen(user, allRooms, today, hotel)
 
 }
 
@@ -93,6 +93,7 @@ function createRooms(rooms) {
 
 // instantiates bookings
 function createBookings(bookings) {
+  sortBookingsByDate(bookings, "ascending")
   bookings.forEach(booking => {
     const newBooking = new Booking(booking) 
     allBookings.push(newBooking)
@@ -137,7 +138,7 @@ function loginHandler() {
   } else if ($('.username-login').val().includes('customer') && $('.password-login').val() === 'overlook2020') {
     assignCurrentUser()
     domUpdates.changeHeader()
-    domUpdates.showUserScreen(user, allRooms, today)
+    domUpdates.showUserScreen(user, allRooms, today, hotel)
   } else {
     $('.incorrect-login').text('try again')
   }
@@ -367,3 +368,38 @@ $('.user-screen').on('click', function(event) {
     domUpdates.returnToBook(user, allRooms, today)
   }
 })
+
+
+// sorter function for dates
+function sortBookingsByDate(bookings, type) {
+  if (type === "ascending") {
+    console.log(bookings)
+    sortBookingsByDateAscending(bookings)
+  }
+  if (type === "descending") {
+    sortBookingsByDescending(bookings)
+  }
+}
+
+  
+function sortBookingsByDateAscending(bookings) {
+  const sorted = bookings.sort((a, b) => {
+    const aDate = a.date.split('/')
+    const bDate = b.date.split('/')
+    if (Number(aDate[2]) < Number(bDate[2])) {
+      return -1
+    } else if (Number(aDate[2]) === Number(bDate[2]) && Number(aDate[1]) < Number(bDate[1])) {
+      return -1
+    } else if (Number(aDate[2]) === Number(bDate[2]) && Number(aDate[1]) === Number(bDate[1]) && Number(aDate[0]) < Number(bDate[0])) {
+      return -1
+    } else if (Number(aDate[2]) > Number(bDate[2])) {
+      return 1;
+    } else if (Number(aDate[2]) === Number(bDate[2]) && Number(aDate[1]) > Number(bDate[1])) {
+      return 1
+    } else if (Number(aDate[2]) === Number(bDate[2]) && Number(aDate[1]) === Number(bDate[1]) && Number(aDate[0]) > Number(bDate[0])) {
+      return 1
+  }
+})
+console.log(sorted)
+return sorted
+}

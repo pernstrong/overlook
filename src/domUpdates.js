@@ -79,13 +79,12 @@ const domUpdates = {
   hideAllSections() {
     $('.login-section').addClass('hide')
     $('.manager-screen').addClass('hide')
-    // $('.user-screen').addClass('hide')
+    $('.user-screen').addClass('hide')
     $('.hotel-image-section').addClass('hide')
   },
 
   // changes screen to manager dash
   showManagerDashInfo(hotel, date) {
-    // let date = $('.manager-date-input').val();
     $('.manager-dash-nav-section').removeClass('hide')
     date = this.formatDate(date)
     this.displayRoomsAvail(hotel, date);
@@ -102,7 +101,6 @@ const domUpdates = {
 
   // next 4 are for displays on manager dashboard
   updateStatsMessageDate(date) {
-    // let date = $('.manager-date-input').val();
     $('.stats-for-day').text(`Stats for ${this.formatDateForDisplay(date)}`)
   },
 
@@ -175,18 +173,27 @@ const domUpdates = {
     }
   },
 
-  // show available rooms
-  showAvailableRooms(hotel, date, duty, type) {
+  // handler to set up show avail rooms
+  showAvailableRoomsHandler(hotel, date, duty, type) {
     let rooms;
     // date = this.formatDate(date)
     if (duty === 'findAll') {
       rooms = hotel.findAvailableRooms(date)
     } else if (duty === 'filter') {
       rooms = hotel.filterAvailRoomsByType(date, type)
+    } else if (duty === 'low') {
+      rooms = hotel.findAvailableRooms(date).sort((a, b) => a.costPerNight - b.costPerNight)
+    } else if (duty === 'high') {
+      rooms = hotel.findAvailableRooms(date).sort((a, b) => b.costPerNight - a.costPerNight)
     }
     if (hotel.findAvailableRooms(date).length < 1) {
       return this.displayNoRoomsAvailMessage('.user-avail-rooms-display')
     }
+    this.showAvailableRooms(rooms, date)
+  },
+
+  // show available rooms
+  showAvailableRooms(rooms, date) {
     this.clearAvailRoomsDisplay()
     rooms.forEach(room => {
       const roomInfo = this.getGeneralRoomInfoToDisplay(room.roomType)
@@ -222,6 +229,15 @@ const domUpdates = {
       `)
     })
     this.addAvailRoomFilter()
+    this.addSortButton(date)
+  },
+
+  addSortButton(date) {
+    $('.sort-section').html('')
+    $('.sort-section').append(`
+      <button class="sort-low-to-high" value="${date}">Sort: Low to High</button>
+      <button class="sort-high-to-low" value="${date}">Sort: High to Low</button>
+    `)
   },
 
   // toggle confirmation and listing screens (cancel button)
@@ -235,7 +251,7 @@ const domUpdates = {
   clearBookingData() {
     $('.user-book-input').val('')
     $('.user-avail-rooms-display').html(' ')
-    // $('.user-book-form').html('')
+    $('.user-book-form').html('')
   },
 
   // error message if date selected is in the past
@@ -280,14 +296,13 @@ const domUpdates = {
 
   // clear user screens
   clearAvailRoomsDisplay() {
-    $('.user-avail-rooms-display').text('')
-    $('.manager-avail-rooms-display').text('')
+    $('.user-avail-rooms-display').html('')
+    $('.manager-avail-rooms-display').html('')
     $('.filter-rooms-section').addClass('hide')
   },
 
   // add filter to guest search for avail rooms 
   addAvailRoomFilter() {
-    // $('.user-book-form').prepend('<button class="book-room">Book Room</button>')
     $('.filter-rooms-section').removeClass('hide')
     $('.filter-rooms-section').html(`
     <label for="filter-rooms" class="filter-rooms">Filter by Room Type</label>
@@ -307,14 +322,13 @@ const domUpdates = {
     this.clearAvailRoomsDisplay()
     date = this.formatDate(date)
     const duty = "filter"
-    this.showAvailableRooms(hotel, date, duty, type)
+    this.showAvailableRoomsHandler(hotel, date, duty, type)
   },
 
   // display thank you to guest after booking reso
   displayThankYou(date) {
     this.clearBookingData()
     $('.user-book-section').addClass('hide')
-
     $('.thank-you-display-area').html(`
     <section class="thank-you-section">
     <h2>Thank you for booking your stay with us!</h2>
@@ -368,9 +382,8 @@ const domUpdates = {
   },
 
   // display guests past reservations on manager screen
-  displayPastBookings(guest, today, hotel) {
+  displayPastBookings(guest, today) {
     let pastBookings = guest.findPastBookings(today)
-    // let pastBookings = hotel.sortBookingsByDate(guest.findPastBookings(today))
     pastBookings.forEach(booking => {
       $('.past-bookings').append(`<li>
       <p>Date: ${this.formatDateForDisplay(booking.date)}</p> 
@@ -443,13 +456,6 @@ const domUpdates = {
     `)
   },
 
-  // displayNoRoomsAvailMessage() {
-  //   $('.user-avail-rooms-display').html(`
-  //   <h3>
-  //   Sorry, there are no available rooms for selected date. Please try a different date.
-  //   </h3>
-  //   `)
-  // },
 }
 
 

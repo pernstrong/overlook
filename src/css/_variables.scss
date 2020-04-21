@@ -1,17 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat&display=swap');
 
+// fonts
 $headerFont: 'Cinzel', serif;
-$font: 'Montserrat', sans-serif; 
-
-
-// colors
-// $blue: #406C94;
-// $blue: #C5D9EA;
-// $purple: #A2A0D7;
-// $lightPurple: #CCCBEC;
-// $green: #94D4BC;
-// $lightGreen: #C4EBDB;
-
+$font: 'Montserrat', sans-serif;
 
 // colors
 // background (off-white)
@@ -20,25 +11,14 @@ $background: lighten(#dbd6ce, 15);
 $nav: lighten(#77aace, 10);
 // manager dash, (tan)
 $color1: lighten(#FFEBB3, 8);
-// guest dashoard (gold) 
+// guest dashoard (gold)
 $color2: #FFEBB3;
 // guest book room(green)
 $color3: #C4EBDB;
-
 // manager search, (salmon)
-$colo2: lighten(#FFC6B3, 8);
-
-// colors round 3
-$blue: lighten(#77aace, 10);
-// $blue: #C5D9EA;
-// $background: lighten(#dbd6ce, 15);
-// $green: #B6AEA2;
-// $lightPurple: red;
-// $purple: desaturate(lighten(#8284CE, 10), 15);
-// $lightGreen: lighten(#C4EBDB, 20);
-// $green: lighten(#94D4BC, 10);
-$lightPurple: #FFEBB3;
-$purple: lighten(#FFEBB3, 8);
+$color4: lighten(#FFC6B3, 8);
+// green background color
 $green: lighten(#FFC6B3, 8);
+// colors round 3
 
 $inline: inline-block;

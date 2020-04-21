@@ -44,17 +44,11 @@ function createDataSets(users, rooms, bookings) {
   createHotel()
   createManager()
   findTodaysDate()
-  // console.log(allBookings.length)
-  // user = allUsers[32]
-  // domUpdates.changeHeader()
-  // domUpdates.showUserScreen(user, allRooms, today, hotel)
-
 }
 
 // uses Date() to get todays date then formats
 function findTodaysDate() {
   todayDateAndTime = new Date();
-  console.log(todayDateAndTime)
   let year = todayDateAndTime.getFullYear()
   let month = (todayDateAndTime.getMonth() + 1)
   let day = todayDateAndTime.getDate();
@@ -93,7 +87,7 @@ function createRooms(rooms) {
 
 // instantiates bookings
 function createBookings(bookings) {
-  sortBookingsByDate(bookings, "ascending")
+  sortBookingsByDateAscending(bookings)
   bookings.forEach(booking => {
     const newBooking = new Booking(booking) 
     allBookings.push(newBooking)
@@ -198,7 +192,7 @@ $('.user-book-button').on('click', function() {
     domUpdates.displayPastDateMessage()
   } else {
     const duty = "findAll"
-    domUpdates.showAvailableRooms(hotel, date, duty)
+    domUpdates.showAvailableRoomsHandler(hotel, date, duty)
   }
 })
 
@@ -206,6 +200,7 @@ $('.user-book-button').on('click', function() {
 $('.user-book-section').on('click', function(event) {
   if (event.target.classList.contains('filter-by-room-type')) {
     let date = $('.user-book-input').val()
+    date = formatFromPicker(date)
     let type = $('#filter-rooms').val()
     domUpdates.displayRoomsAvailByType(date, type, hotel)
   }
@@ -213,7 +208,6 @@ $('.user-book-section').on('click', function(event) {
 
 // fetch function to POST new booking to API
 function postNewBooking(user, roomNumber, date) {
-  // console.log(typeof Date.now().toString())
   let objDate = formatDate(date)
   let roomNum = Number(roomNumber)
   fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
@@ -229,7 +223,6 @@ function postNewBooking(user, roomNumber, date) {
   })
     .then(response => response.json())
     .catch(err => console.error(err))
-  promiseAll()
 }
 
 // formats dates from -'s to /'s
@@ -253,7 +246,6 @@ $('.search-button').on('click', function() {
 // event propagation handler for manager search results area
 $('.user-search-results').on('click', function(event) {
   let id = event.target.value
-  // console.log(id)
   let guest = findGuestById(id)
   let date = $('.manager-book-input').val()
   let bookingId = $('.delete-booking').val()
@@ -261,7 +253,6 @@ $('.user-search-results').on('click', function(event) {
   if (event.target.classList.contains('show-guest-details')) {
     domUpdates.showGuestDetails(guest, allRooms, today)
   } else if (event.target.classList.contains('manager-book-button')) {
-    console.log(date)
     date = formatFromPicker(date) 
     if (isFutureDate(date) === false) {
       domUpdates.displayPastDateMessage()
@@ -300,23 +291,18 @@ function deleteBooking(bookingId) {
     body: 
     JSON.stringify(
       {
-        "id": id,
+        id,
       }
     )
   })
-    // .then(response => response.json())
-    .then(res => res.text())
-    .then(text => console.log(text))
-    // .catch(err => console.error(err))
+    .then(response => response.json())
+    .catch(err => console.error(err))
 }
 
 // checks if dates has passed or not
 function isFutureDate(date) {
-  console.log(date)
   const dateArray = date.split('/')
   const todayArray = today.split('/')
-  console.log(dateArray)
-  console.log(todayArray)
   if (Number(dateArray[0]) < Number(todayArray[0])) {
     return false
   } else if (Number(dateArray[0]) === Number(todayArray[0]) && Number(dateArray[1]) < Number(todayArray[1])) {
@@ -355,8 +341,20 @@ $('.user-avail-rooms-display').on('click', function(event) {
     hotel.addBooking(user, Number(roomNum), date)
     postNewBooking(user, Number(roomNum), date)
     clearData()
-    promiseAll()
     domUpdates.displayThankYou(date)
+  } 
+})
+
+// sort handler for high to low/low to high
+$('.user-book-heading-section').on('click', function(event) {
+  let date = $('.user-book-input').val()
+  date = formatFromPicker(date)
+  if (event.target.classList.contains('sort-low-to-high')) {
+    let duty = "low"
+    domUpdates.showAvailableRoomsHandler(hotel, date, duty)
+  } else if (event.target.classList.contains('sort-high-to-low')) {
+    let duty = "high"
+    domUpdates.showAvailableRoomsHandler(hotel, date, duty)
   }
 })
 
@@ -369,37 +367,24 @@ $('.user-screen').on('click', function(event) {
   }
 })
 
-
-// sorter function for dates
-function sortBookingsByDate(bookings, type) {
-  if (type === "ascending") {
-    console.log(bookings)
-    sortBookingsByDateAscending(bookings)
-  }
-  if (type === "descending") {
-    sortBookingsByDescending(bookings)
-  }
-}
-
-  
+// sorts bookings by date
 function sortBookingsByDateAscending(bookings) {
   const sorted = bookings.sort((a, b) => {
     const aDate = a.date.split('/')
     const bDate = b.date.split('/')
-    if (Number(aDate[2]) < Number(bDate[2])) {
+    if (Number(aDate[0]) < Number(bDate[0])) {
       return -1
-    } else if (Number(aDate[2]) === Number(bDate[2]) && Number(aDate[1]) < Number(bDate[1])) {
+    } else if (Number(aDate[0]) === Number(bDate[0]) && Number(aDate[1]) < Number(bDate[1])) {
       return -1
-    } else if (Number(aDate[2]) === Number(bDate[2]) && Number(aDate[1]) === Number(bDate[1]) && Number(aDate[0]) < Number(bDate[0])) {
+    } else if (Number(aDate[0]) === Number(bDate[0]) && Number(aDate[1]) === Number(bDate[1]) && Number(aDate[2]) < Number(bDate[2])) {
       return -1
-    } else if (Number(aDate[2]) > Number(bDate[2])) {
+    } else if (Number(aDate[0]) > Number(bDate[0])) {
       return 1;
-    } else if (Number(aDate[2]) === Number(bDate[2]) && Number(aDate[1]) > Number(bDate[1])) {
+    } else if (Number(aDate[0]) === Number(bDate[0]) && Number(aDate[1]) > Number(bDate[1])) {
       return 1
-    } else if (Number(aDate[2]) === Number(bDate[2]) && Number(aDate[1]) === Number(bDate[1]) && Number(aDate[0]) > Number(bDate[0])) {
+    } else if (Number(aDate[0]) === Number(bDate[0]) && Number(aDate[1]) === Number(bDate[1]) && Number(aDate[2]) > Number(bDate[2])) {
       return 1
-  }
-})
-console.log(sorted)
-return sorted
+    }
+  })
+  return sorted
 }
